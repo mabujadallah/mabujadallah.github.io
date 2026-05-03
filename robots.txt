@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mahmoud-abujadallah.github.io/mahmoud_abujadallah/sitemap.xml
