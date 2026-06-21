@@ -1,0 +1,30 @@
+{
+  "source": "https://medium.com/@mabujadallah",
+  "items": [
+    {
+      "title": "Cursor Is Quietly Becoming an Agent Operating System",
+      "url": "https://medium.com/@mabujadallah/cursor-is-quietly-becoming-an-agent-operating-system-1bc35a6fe226?source=rss-8643104a94bb------2",
+      "date": "2026-06-19",
+      "snippet": "If you’ve been using Cursor as “VS Code with a smarter autocomplete,” the last few weeks have been a signal that the product is heading somewhere very different. Across June 2026,…",
+      "tags": [
+        "cursor-ai",
+        "cv",
+        "cursor"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*5WS4ip3HJSSkHnjfSIEEEQ.png"
+    },
+    {
+      "title": "How AI Coding Agents Changed the Way I Build Android Apps",
+      "url": "https://medium.com/@mabujadallah/how-ai-coding-agents-changed-the-way-i-build-android-apps-4ef39dc93091?source=rss-8643104a94bb------2",
+      "date": "2026-06-18",
+      "snippet": "A practical field guide to Claude Code, Cursor, and Gemini in Android Studio, where the real speedups are, and where the hype quietly falls apart. The unit of work shifted from a l…",
+      "tags": [
+        "ai-agent",
+        "mobile-app-development",
+        "ai-coding-agent"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/800/1*CqzIjuIv-mvjXBECmc4k9A.png"
+    }
+  ],
+  "updated": "2026-06-20T21:41:27Z"
+}

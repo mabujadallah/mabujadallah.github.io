@@ -389,6 +389,18 @@
   html[data-theme="dark"] .icon-btn .ic-sun{display:block}
   #langToggle{font-family:var(--mono);font-weight:600;letter-spacing:.02em}
 
+  /* ---------- more-link + home feed teaser ---------- */
+  .more-link{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--accent-deep);border-bottom:1px solid transparent;transition:border-color .2s}
+  .more-link:hover{border-color:var(--accent-deep)}
+  .feed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:6px}
+  .feed-card{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s,box-shadow .2s}
+  .feed-card:hover{border-color:var(--line-strong);transform:translateY(-3px);box-shadow:0 16px 36px -26px rgba(21,24,31,.4)}
+  .feed-card img{aspect-ratio:16/9;width:100%;object-fit:cover;background:var(--line)}
+  .feed-card .fb{padding:13px 15px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .feed-card .kind{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  .feed-card h4{font-family:var(--display);font-weight:600;font-size:.98rem;line-height:1.3;margin:0;letter-spacing:-.01em}
+  .feed-card .fm{margin-top:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+
   /* ---------- RTL / Arabic ---------- */
   [dir="rtl"]{--display:'Cairo','Space Grotesk',sans-serif;--body:'Tajawal','Inter',sans-serif}
   [dir="rtl"] body{font-size:17.5px;line-height:1.8}
@@ -433,7 +445,8 @@
       <a href="#research" data-i18n="nav.research">Research</a>
       <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#education" data-i18n="nav.education">Education</a>
-      <a href="#recognition" data-i18n="nav.recognition">Recognition</a>
+      <a href="publications.html" data-i18n="nav.pubs">Publications</a>
+      <a href="media.html" data-i18n="nav.media">Writing</a>
       <a href="#about" data-i18n="nav.about">About</a>
     </nav>
     <div class="nav-tools">
@@ -586,6 +599,7 @@
         </div>
       </article>
     </div>
+    <a class="more-link reveal" href="publications.html" data-i18n="pub.viewAll">View all publications &amp; citations →</a>
   </div>
 </section>
 
@@ -726,6 +740,19 @@
   </div>
 </section>
 
+<!-- WRITING & TALKS (teaser) -->
+<section id="writing" style="display:none">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="writing.eyebrow">Writing &amp; talks</span>
+      <h2 data-i18n="writing.h2">Latest from Medium &amp; YouTube</h2>
+      <p data-i18n="writing.intro">Recent essays and lectures — pulled automatically from my feeds.</p>
+    </div>
+    <div class="feed-grid" id="homeFeed"></div>
+    <a class="more-link" href="media.html" data-i18n="writing.viewAll">All writing &amp; talks →</a>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="wrap">
@@ -809,7 +836,7 @@
 
     const ar = {
       'skip':'تخطَّ إلى المحتوى',
-      'nav.research':'الأبحاث','nav.experience':'الخبرة','nav.education':'التعليم','nav.recognition':'التكريم','nav.about':'نبذة','nav.cta':'تواصل معي',
+      'nav.research':'الأبحاث','nav.experience':'الخبرة','nav.education':'التعليم','nav.recognition':'التكريم','nav.pubs':'المنشورات','nav.media':'مقالاتي','nav.about':'نبذة','nav.cta':'تواصل معي',
       'hero.eyebrow':'الذكاء الاصطناعي لهندسة البرمجيات',
       'hero.name':'محمود أبو جادالله',
       'hero.sub':'باحث دكتوراه · جامعة ÉTS مونتريال',
@@ -870,6 +897,11 @@
       'contact.h2':'لنبنِ ذكاءً اصطناعيًا جديرًا بالثقة للبرمجيات',
       'contact.p':'أرحّب بالاستفسارات حول التعاون البحثي، والمناصب الأكاديمية، وأي موضوع عند تقاطع الذكاء الاصطناعي الوكيل وهندسة البرمجيات.',
       'contact.email':'البريد الإلكتروني',
+      'pub.viewAll':'كل المنشورات والاقتباسات ←',
+      'writing.eyebrow':'مقالات ومحاضرات',
+      'writing.h2':'أحدث ما نشرته على Medium وYouTube',
+      'writing.intro':'مقالات ومحاضرات حديثة — تُجلب تلقائيًا من مصادري.',
+      'writing.viewAll':'كل المقالات والمحاضرات ←',
       'footer.copy':'© 2026 محمود س. ي. أبو جادالله',
       'footer.loc':'ÉTS مونتريال · غزة، فلسطين'
     };
@@ -925,6 +957,39 @@
       entries.forEach(e=>{ if(e.isIntersecting){ play(); ob.disconnect(); } });
     }, {threshold:0.4});
     ob.observe(card);
+  })();
+
+  // home teaser: latest Medium articles + YouTube videos from the synced feeds
+  (function(){
+    const grid = document.getElementById('homeFeed');
+    const section = document.getElementById('writing');
+    if(!grid || !section) return;
+    const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const kind = { article:'Medium', video:'YouTube' };
+
+    function cardFor(it){
+      const a = document.createElement('a');
+      a.className = 'feed-card'; a.href = it.url; a.target = '_blank'; a.rel = 'noopener';
+      const img = it.image || it.thumb;
+      a.innerHTML =
+        (img ? '<img loading="lazy" alt="" src="'+esc(img)+'">' : '') +
+        '<div class="fb"><span class="kind">'+kind[it.type]+'</span>'+
+        '<h4>'+esc(it.title)+'</h4>'+
+        '<span class="fm">'+esc(it.date||'')+'</span></div>';
+      return a;
+    }
+
+    Promise.allSettled([
+      fetch('data/articles.json').then(r=>r.json()),
+      fetch('data/videos.json').then(r=>r.json())
+    ]).then(res=>{
+      const arts = (res[0].value && res[0].value.items || []).slice(0,2).map(x=>({...x,type:'article'}));
+      const vids = (res[1].value && res[1].value.items || []).slice(0,2).map(x=>({...x,type:'video'}));
+      const items = [...arts, ...vids];
+      if(!items.length) return;             // keep section hidden if nothing loaded
+      items.forEach(it => grid.appendChild(cardFor(it)));
+      section.style.display = '';
+    }).catch(()=>{});
   })();
 </script>
 </body>

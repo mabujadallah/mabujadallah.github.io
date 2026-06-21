@@ -1,0 +1,123 @@
+/* Shared design system for subpages (publications, media).
+   Mirrors the homepage tokens so subpages feel native. */
+:root{
+  --paper:#F5F6F8; --paper-raised:#FFFFFF;
+  --ink:#15181F; --ink-soft:#525a68; --ink-faint:#838c9b;
+  --line:#E3E6EC; --line-strong:#cfd4dd;
+  --accent:#6D3BEB; --accent-deep:#5326c4; --accent-soft:rgba(109,59,235,.10);
+  --accept:#157f52; --accept-soft:rgba(21,127,82,.10);
+  --reject:#c0392b; --reject-soft:rgba(192,57,43,.08);
+  --display:'Space Grotesk',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1080px; --r:14px;
+}
+html{color-scheme:light}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0d1017; --paper-raised:#161b24;
+  --ink:#e7ebf2; --ink-soft:#a6b0c0; --ink-faint:#6f7989;
+  --line:#222a37; --line-strong:#333d4d;
+  --accent:#9d80ff; --accent-deep:#b9a6ff; --accent-soft:rgba(157,128,255,.16);
+  --accept:#43b985; --accept-soft:rgba(67,185,133,.16);
+  --reject:#e5675a; --reject-soft:rgba(229,103,90,.14);
+}
+[dir="rtl"]{--display:'Cairo','Space Grotesk',sans-serif;--body:'Tajawal','Inter',sans-serif}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.skip{position:absolute;left:-999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;font-family:var(--mono);font-size:13px}
+.skip:focus{left:0}
+
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent);display:inline-block}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:-.01em}
+.mono-badge{width:34px;height:34px;border-radius:9px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:-.04em}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{font-family:var(--mono);font-size:13px;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .2s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:0;background:var(--accent);transition:width .25s}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-tools{display:flex;align-items:center;gap:10px}
+.icon-btn{width:36px;height:36px;display:grid;place-items:center;background:transparent;border:1px solid var(--line-strong);border-radius:9px;color:var(--ink-soft);cursor:pointer;transition:border-color .2s,color .2s;font-family:var(--mono);font-size:13px;font-weight:600}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+.icon-btn svg{width:17px;height:17px}
+.icon-btn .ic-sun{display:none}
+html[data-theme="dark"] .icon-btn .ic-moon{display:none}
+html[data-theme="dark"] .icon-btn .ic-sun{display:block}
+.nav-cta{font-family:var(--mono);font-size:13px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:7px 14px;color:var(--ink);transition:.2s}
+.nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:760px){.nav-links{display:none}}
+
+/* page head */
+.page-head{padding:64px 0 8px}
+.page-head h1{font-family:var(--display);font-weight:600;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.03em;line-height:1.05;margin:.6rem 0 0}
+.page-head p{color:var(--ink-soft);max-width:60ch;margin:.9rem 0 0}
+.back{font-family:var(--mono);font-size:13px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:7px;transition:color .2s}
+.back:hover{color:var(--accent)}
+
+main{padding-bottom:40px}
+section{padding:34px 0}
+.sub-eyebrow{margin:8px 0 20px}
+
+/* generic state tag (matches homepage PR tags) */
+.tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;text-transform:uppercase}
+.tag.merged{background:var(--accent-soft);color:var(--accent-deep)}
+.tag.open{background:var(--accept-soft);color:var(--accept)}
+.tag.draft{background:#eef0f3;color:var(--ink-soft)}
+html[data-theme="dark"] .tag.draft{background:#222a37}
+.tag.venue{background:transparent;color:var(--ink-faint);border:1px dashed var(--line-strong);font-weight:500}
+
+/* cards grid (articles / videos) */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.card{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{border-color:var(--line-strong);transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(21,24,31,.35)}
+.card .thumb{aspect-ratio:16/9;width:100%;object-fit:cover;background:var(--line);display:block}
+.card .body{padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-family:var(--display);font-weight:600;font-size:1.05rem;line-height:1.3;letter-spacing:-.015em;margin:0}
+.card p{margin:0;color:var(--ink-soft);font-size:.92rem}
+.card .meta{margin-top:auto;font-family:var(--mono);font-size:12px;color:var(--ink-faint);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.card .play{position:relative}
+.card .play::after{content:"";position:absolute;inset:0;background:rgba(13,16,23,.18);opacity:0;transition:opacity .2s}
+.card:hover .play::after{opacity:1}
+
+.empty{color:var(--ink-faint);font-family:var(--mono);font-size:13px;border:1px dashed var(--line-strong);border-radius:var(--r);padding:26px;text-align:center}
+
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-faint);margin-top:30px}
+.foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:12px}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* publications list */
+.pub-list{display:flex;flex-direction:column;gap:16px}
+.pub{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.pub:hover{border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 18px 40px -28px rgba(21,24,31,.35)}
+.pub .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.pub h3{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.32;letter-spacing:-.015em;margin:0 0 6px}
+.pub .authors{color:var(--ink-soft);font-size:.96rem;margin:0 0 3px}
+.pub .authors .me{color:var(--ink);font-weight:600;border-bottom:2px solid var(--accent-soft)}
+.pub .venue{color:var(--ink-faint);font-size:.92rem;margin:0}
+.pub .links{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px}
+.pub .links a,.pub .links button{color:var(--accent-deep);background:none;border:0;padding:0;cursor:pointer;font:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
+.pub .links a:hover,.pub .links button:hover{border-color:var(--accent-deep)}
+.bib{margin-top:12px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink-soft);overflow-x:auto;white-space:pre;display:none}
+.bib.show{display:block}
+
+[dir="rtl"] .eyebrow::before{margin-left:0}
+[dir="rtl"] .pub .authors .me{border-bottom-color:var(--accent-soft)}
+[dir="rtl"] .card .meta,[dir="rtl"] .pub .venue{direction:rtl}

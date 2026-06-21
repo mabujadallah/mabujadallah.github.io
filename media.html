@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing & Talks — Mahmoud S. Y. Abujadallah</title>
+<meta name="description" content="Articles by Mahmoud S. Y. Abujadallah on Medium and lectures on YouTube — kept in sync automatically.">
+<link rel="canonical" href="https://mabujadallah.github.io/mahmoud_abujadallah/media.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&family=Cairo:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  document.documentElement.classList.add('js');
+  (function(){try{
+    var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+    var l=localStorage.getItem('lang')||'en';
+    document.documentElement.lang=l;document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+  }catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="mono-badge">MA</span><span>Mahmoud&nbsp;Abujadallah</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#research" data-i18n="nav.research">Research</a>
+      <a href="publications.html" data-i18n="nav.pubs">Publications</a>
+      <a href="media.html" aria-current="page" data-i18n="nav.media">Writing &amp; Talks</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="langToggle" type="button" aria-label="Switch language to Arabic" title="العربية">ع</button>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <a class="back" href="index.html" data-i18n="back">← Back to home</a>
+      <span class="eyebrow" style="margin-top:14px" data-i18n="media.eyebrow">Articles &amp; lectures</span>
+      <h1 data-i18n="media.h1">Writing &amp; Talks</h1>
+      <p data-i18n="media.intro">Essays I publish on Medium and lectures I post on YouTube. This page syncs automatically from both feeds.</p>
+    </div>
+
+    <section>
+      <span class="eyebrow sub-eyebrow" data-i18n="media.articles">On Medium</span>
+      <div class="grid" id="articles"><div class="empty" data-i18n="loading">Loading…</div></div>
+    </section>
+
+    <section>
+      <span class="eyebrow sub-eyebrow" data-i18n="media.videos">On YouTube</span>
+      <div class="grid" id="videos"><div class="empty" data-i18n="loading">Loading…</div></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span data-i18n="footer.copy">© 2026 Mahmoud S. Y. Abujadallah</span>
+    <span data-i18n="footer.loc">ÉTS Montréal · Gaza, Palestine</span>
+  </div>
+</footer>
+
+<script>
+  // ---- helpers ----
+  const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+  const reveal = el => { el.classList.add('reveal'); io.observe(el); };
+
+  function card(href, thumbHtml, title, sub, metaHtml){
+    const a = document.createElement('a');
+    a.className='card'; a.href=href; a.target='_blank'; a.rel='noopener';
+    a.innerHTML = thumbHtml +
+      '<div class="body"><h3>'+esc(title)+'</h3>'+
+      (sub?'<p>'+esc(sub)+'</p>':'')+
+      '<div class="meta">'+metaHtml+'</div></div>';
+    reveal(a); return a;
+  }
+
+  function render(url, mount, build){
+    fetch(url).then(r=>r.json()).then(d=>{
+      const m = document.getElementById(mount);
+      if(!d.items || !d.items.length){ m.innerHTML='<div class="empty">'+(window.__empty||'Nothing here yet.')+'</div>'; return; }
+      m.innerHTML='';
+      d.items.forEach(it => m.appendChild(build(it)));
+    }).catch(()=>{ document.getElementById(mount).innerHTML='<div class="empty">'+(window.__failed||'Couldn’t load this feed.')+'</div>'; });
+  }
+
+  render('data/articles.json','articles', a => card(
+    a.url,
+    a.image ? '<img class="thumb" loading="lazy" alt="" src="'+esc(a.image)+'">' : '',
+    a.title, a.snippet,
+    '<span>'+esc(a.date)+'</span>'+(a.tags&&a.tags[0]?'<span>#'+esc(a.tags[0])+'</span>':'')
+  ));
+
+  render('data/videos.json','videos', v => card(
+    v.url,
+    '<div class="play"><img class="thumb" loading="lazy" alt="" src="'+esc(v.thumb)+'"></div>',
+    v.title, v.snippet,
+    '<span>'+esc(v.date)+'</span><span>▶ YouTube</span>'
+  ));
+
+  // ---- theme toggle ----
+  (function(){
+    const btn=document.getElementById('themeToggle'), root=document.documentElement;
+    btn && btn.addEventListener('click',()=>{
+      const dark=root.getAttribute('data-theme')==='dark';
+      if(dark)root.removeAttribute('data-theme');else root.setAttribute('data-theme','dark');
+      try{localStorage.setItem('theme',dark?'light':'dark');}catch(e){}
+    });
+  })();
+
+  // ---- language toggle (page chrome) ----
+  (function(){
+    const btn=document.getElementById('langToggle'), root=document.documentElement;
+    const nodes=document.querySelectorAll('[data-i18n]'); const en={};
+    nodes.forEach(el=>en[el.getAttribute('data-i18n')]=el.innerHTML);
+    const ar={
+      'skip':'تخطَّ إلى المحتوى','back':'← العودة إلى الرئيسية',
+      'nav.research':'الأبحاث','nav.pubs':'المنشورات','nav.media':'مقالات ومحاضرات','nav.about':'نبذة',
+      'media.eyebrow':'مقالات ومحاضرات','media.h1':'الكتابة والمحاضرات',
+      'media.intro':'مقالات أنشرها على Medium ومحاضرات أنشرها على YouTube. تتزامن هذه الصفحة تلقائيًا من كلا المصدرين.',
+      'media.articles':'على Medium','media.videos':'على YouTube','loading':'جارٍ التحميل…',
+      'footer.copy':'© 2026 محمود س. ي. أبو جادالله','footer.loc':'ÉTS مونتريال · غزة، فلسطين'
+    };
+    function apply(l){
+      const isAr=l==='ar';
+      nodes.forEach(el=>{const k=el.getAttribute('data-i18n');el.innerHTML=isAr?(ar[k]!=null?ar[k]:en[k]):en[k];});
+      root.lang=l;root.dir=isAr?'rtl':'ltr';
+      window.__empty=isAr?'لا يوجد شيء بعد.':'Nothing here yet.';
+      window.__failed=isAr?'تعذّر تحميل هذا المصدر.':'Couldn’t load this feed.';
+      if(btn){btn.textContent=isAr?'EN':'ع';btn.title=isAr?'English':'العربية';}
+      try{localStorage.setItem('lang',l);}catch(e){}
+    }
+    let cur='en';try{cur=localStorage.getItem('lang')||'en';}catch(e){}
+    apply(cur);
+    btn && btn.addEventListener('click',()=>apply(root.lang==='ar'?'en':'ar'));
+  })();
+</script>
+</body>
+</html>
