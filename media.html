@@ -8,6 +8,17 @@
 <meta name="theme-color" content="#6D3BEB">
 <link rel="canonical" href="https://mabujadallah.github.io/mahmoud_abujadallah/media.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Writing & Talks - Mahmoud S. Y. Abujadallah">
+<meta property="og:description" content="Articles and lectures on AI for software engineering, LLMs, and research practice.">
+<meta property="og:url" content="https://mabujadallah.github.io/mahmoud_abujadallah/media.html">
+<meta property="og:image" content="https://mabujadallah.github.io/mahmoud_abujadallah/images/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Writing & Talks - Mahmoud S. Y. Abujadallah">
+<meta name="twitter:description" content="Articles and lectures on AI for software engineering, LLMs, and research practice.">
+<meta name="twitter:image" content="https://mabujadallah.github.io/mahmoud_abujadallah/images/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&family=Cairo:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,8 +28,10 @@
   (function(){try{
     var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
     if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+    /* Arabic disabled for now — keep English / LTR
     var l=localStorage.getItem('lang')||'en';
     document.documentElement.lang=l;document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+    */
   }catch(e){}})();
 </script>
 </head>
@@ -36,7 +49,9 @@
       <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
     <div class="nav-tools">
+      <!-- Arabic toggle disabled for now
       <button class="icon-btn" id="langToggle" type="button" aria-label="Switch language to Arabic" title="العربية">ع</button>
+      -->
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
@@ -147,6 +162,7 @@
 
   // ---- language toggle (page chrome) ----
   (function(){
+    return; // Arabic disabled for now — remove this line to re-enable
     const btn=document.getElementById('langToggle'), root=document.documentElement;
     const nodes=document.querySelectorAll('[data-i18n]'); const en={};
     nodes.forEach(el=>en[el.getAttribute('data-i18n')]=el.innerHTML);
