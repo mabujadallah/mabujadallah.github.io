@@ -2,7 +2,7 @@
 """Fetch Medium articles and YouTube videos into data/*.json.
 
 Stdlib-only so it runs unchanged in CI and locally. Used by the
-sync-feeds GitHub Action (scheduled) and can be run by hand to seed data.
+sync-feeds GitHub Action (runs daily, 06:00 UTC) and can be run by hand.
 """
 import json
 import re
