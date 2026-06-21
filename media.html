@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing & Talks — Mahmoud S. Y. Abujadallah</title>
 <meta name="description" content="Articles by Mahmoud S. Y. Abujadallah on Medium and lectures on YouTube — kept in sync automatically.">
+<meta name="theme-color" content="#6D3BEB">
 <link rel="canonical" href="https://mabujadallah.github.io/mahmoud_abujadallah/media.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +23,7 @@
 </script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
 <header class="nav">
@@ -74,8 +76,31 @@
 <script>
   // ---- helpers ----
   const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
-  const reveal = el => { el.classList.add('reveal'); io.observe(el); };
+  (function(){
+    const root = document.documentElement;
+    function update(){
+      const max = Math.max(1, root.scrollHeight - innerHeight);
+      root.style.setProperty('--scroll-progress', Math.min(pageYOffset / max, 1).toFixed(4));
+    }
+    update();
+    addEventListener('scroll', update, {passive:true});
+    addEventListener('resize', update);
+  })();
+  const reduceMotion = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const inView = el => {
+    const r = el.getBoundingClientRect();
+    return r.top < innerHeight * .96 && r.bottom > 0;
+  };
+  const io = (!reduceMotion && 'IntersectionObserver' in window)
+    ? new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -36px 0px'})
+    : null;
+  const reveal = el => {
+    el.classList.add('reveal');
+    if(reduceMotion || inView(el) || !io) el.classList.add('in');
+    else io.observe(el);
+    setTimeout(()=>{ if(!el.classList.contains('in') && inView(el)) el.classList.add('in'); }, 900);
+    setTimeout(()=>el.classList.add('in'), 2600);
+  };
 
   function card(href, thumbHtml, title, sub, metaHtml){
     const a = document.createElement('a');
