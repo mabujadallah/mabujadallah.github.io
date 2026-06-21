@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing & Talks — Mahmoud S. Y. Abujadallah</title>
 <meta name="description" content="Articles by Mahmoud S. Y. Abujadallah on Medium and lectures on YouTube — kept in sync automatically.">
+<meta name="author" content="Mahmoud S. Y. Abujadallah">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#6D3BEB">
 <link rel="canonical" href="https://mabujadallah.github.io/mahmoud_abujadallah/media.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -139,14 +141,14 @@
 
   render('data/articles.json','articles', a => card(
     a.url,
-    a.image ? '<img class="thumb" loading="lazy" alt="" src="'+esc(a.image)+'">' : '',
+    a.image ? '<img class="thumb" loading="lazy" alt="'+esc(a.title)+'" src="'+esc(a.image)+'">' : '',
     a.title, a.snippet,
     '<span>'+esc(a.date)+'</span>'+(a.tags&&a.tags[0]?'<span>#'+esc(a.tags[0])+'</span>':'')
   ));
 
   render('data/videos.json','videos', v => card(
     v.url,
-    '<div class="play"><img class="thumb" loading="lazy" alt="" src="'+esc(v.thumb)+'"></div>',
+    '<div class="play"><img class="thumb" loading="lazy" alt="'+esc(v.title)+'" src="'+esc(v.thumb)+'"></div>',
     v.title, v.snippet,
     '<span>'+esc(v.date)+'</span><span>▶ YouTube</span>'
   ));

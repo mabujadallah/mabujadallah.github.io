@@ -1088,7 +1088,7 @@ body{
       a.className = 'feed-card'; a.href = it.url; a.target = '_blank'; a.rel = 'noopener';
       const img = it.image || it.thumb;
       a.innerHTML =
-        (img ? '<img loading="lazy" alt="" src="'+esc(img)+'">' : '') +
+        (img ? '<img loading="lazy" alt="'+esc(it.title)+'" src="'+esc(img)+'">' : '') +
         '<div class="fb"><span class="kind">'+kind[it.type]+'</span>'+
         '<h4>'+esc(it.title)+'</h4>'+
         '<span class="fm">'+esc(it.date||'')+'</span></div>';
