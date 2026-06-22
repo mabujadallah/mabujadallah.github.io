@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  /* Forward legacy /mahmoud_abujadallah/* links (old project-pages URL) to the root domain. */
+  (function(){
+    var m = location.pathname.match(/^\/mahmoud_abujadallah(\/.*)?$/);
+    if (m) location.replace("https://mabujadallah.github.io" + (m[1] || "/") + location.search + location.hash);
+  })();
+</script>
 <title>Page not found (404) — Mahmoud S. Y. Abujadallah</title>
 <meta name="description" content="The page you were looking for doesn't exist. Head back to Mahmoud Abujadallah's homepage.">
 <meta name="robots" content="noindex, follow">
