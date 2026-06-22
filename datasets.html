@@ -7,6 +7,7 @@
 <meta name="description" content="The GitHub Agentic PR Dataset: ~2 million GitHub pull requests authored by AI coding agents (Claude Code, Cursor, GitHub Copilot, Devin) and human developers, with 6.7M commits and 55M file-level diffs. Open data (CC-BY-4.0) for agentic AI, code generation, and software engineering research.">
 <meta name="keywords" content="GitHub Agentic PR Dataset, AI coding agents, agentic pull requests, Claude Code, Cursor, GitHub Copilot, Devin, code generation dataset, bug fix dataset, mining software repositories, MSR, software engineering, LLM, open data">
 <meta name="author" content="Mahmoud S. Y. Abujadallah">
+<meta name="author" content="Mohammed Sayagh">
 <meta name="theme-color" content="#6D3BEB">
 <link rel="canonical" href="https://mabujadallah.github.io/datasets.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -37,17 +38,23 @@
   "citation": "Li, H., Zhang, H., & Hassan, A. E. (2025). The Rise of AI Teammates in Software Engineering (SE) 3.0: How Autonomous Coding Agents Are Reshaping Software Engineering. arXiv:2507.15003.",
   "license": "https://creativecommons.org/licenses/by/4.0/",
   "isAccessibleForFree": true,
-  "creator": {
-    "@type": "Person",
-    "name": "Mahmoud S. Y. Abujadallah",
-    "url": "https://mabujadallah.github.io/",
-    "sameAs": [
-      "https://huggingface.co/mabujadallah",
-      "https://github.com/mabujadallah",
-      "https://orcid.org/0009-0009-6800-0481",
-      "https://scholar.google.com/citations?user=rj5uozAAAAAJ"
-    ]
-  },
+  "creator": [
+    {
+      "@type": "Person",
+      "name": "Mahmoud S. Y. Abujadallah",
+      "url": "https://mabujadallah.github.io/",
+      "sameAs": [
+        "https://huggingface.co/mabujadallah",
+        "https://github.com/mabujadallah",
+        "https://orcid.org/0009-0009-6800-0481",
+        "https://scholar.google.com/citations?user=rj5uozAAAAAJ"
+      ]
+    },
+    {
+      "@type": "Person",
+      "name": "Mohammed Sayagh"
+    }
+  ],
   "keywords": [
     "AI coding agents",
     "agentic pull requests",
@@ -265,7 +272,7 @@ print(df[<span class="s">"agent"</span>].value_counts())</pre>
       <article class="pub reveal">
         <div class="tags"><span class="tag merged">Dataset</span><span class="tag venue">Hugging Face · CC-BY-4.0</span></div>
         <h3>GitHub Agentic PR Dataset: Pull Requests from AI Coding Agents and Humans</h3>
-        <p class="authors"><span class="me">Abujadallah, M.</span> (2026)</p>
+        <p class="authors"><span class="me">Abujadallah, M.</span> &amp; Sayagh, M. (2026)</p>
         <p class="venue">Hugging Face Datasets · <a href="https://huggingface.co/datasets/mabujadallah/GitHub-Agentic-PR-Dataset" target="_blank" rel="noopener" style="color:var(--accent-deep)">huggingface.co/datasets/mabujadallah/GitHub-Agentic-PR-Dataset</a></p>
         <div class="links">
           <button type="button" class="cite">Cite</button>
@@ -273,7 +280,7 @@ print(df[<span class="s">"agent"</span>].value_counts())</pre>
         </div>
         <pre class="bib">@misc{abujadallah_github_agentic_pr_dataset,
   title        = {GitHub Agentic PR Dataset: Pull Requests from AI Coding Agents and Humans},
-  author       = {Abujadallah, Mahmoud},
+  author       = {Abujadallah, Mahmoud and Sayagh, Mohammed},
   year         = {2026},
   howpublished = {\url{https://huggingface.co/datasets/mabujadallah/GitHub-Agentic-PR-Dataset}},
   note         = {Hugging Face Datasets}
