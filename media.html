@@ -7,7 +7,7 @@
 <meta name="description" content="Articles by Mahmoud S. Y. Abujadallah on Medium and lectures on YouTube — kept in sync automatically.">
 <meta name="author" content="Mahmoud S. Y. Abujadallah">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#6D3BEB">
+<meta name="theme-color" content="#0969DA">
 <link rel="canonical" href="https://mabujadallah.github.io/media.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
@@ -48,6 +48,7 @@
       <a href="index.html#research" data-i18n="nav.research">Research</a>
       <a href="publications.html" data-i18n="nav.pubs">Publications</a>
       <a href="datasets.html" data-i18n="nav.data">Data</a>
+      <a href="projects.html" data-i18n="nav.projects">Projects</a>
       <a href="media.html" aria-current="page" data-i18n="nav.media">Writing &amp; Talks</a>
       <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
@@ -94,16 +95,7 @@
 <script>
   // ---- helpers ----
   const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  (function(){
-    const root = document.documentElement;
-    function update(){
-      const max = Math.max(1, root.scrollHeight - innerHeight);
-      root.style.setProperty('--scroll-progress', Math.min(pageYOffset / max, 1).toFixed(4));
-    }
-    update();
-    addEventListener('scroll', update, {passive:true});
-    addEventListener('resize', update);
-  })();
+  // scroll-progress now lives in css/site.js
   const reduceMotion = matchMedia('(prefers-reduced-motion:reduce)').matches;
   const inView = el => {
     const r = el.getBoundingClientRect();
@@ -153,15 +145,7 @@
     '<span>'+esc(v.date)+'</span><span>▶ YouTube</span>'
   ));
 
-  // ---- theme toggle ----
-  (function(){
-    const btn=document.getElementById('themeToggle'), root=document.documentElement;
-    btn && btn.addEventListener('click',()=>{
-      const dark=root.getAttribute('data-theme')==='dark';
-      if(dark)root.removeAttribute('data-theme');else root.setAttribute('data-theme','dark');
-      try{localStorage.setItem('theme',dark?'light':'dark');}catch(e){}
-    });
-  })();
+  // ---- theme toggle now lives in css/site.js ----
 
   // ---- language toggle (page chrome) ----
   (function(){
@@ -191,5 +175,6 @@
     btn && btn.addEventListener('click',()=>apply(root.lang==='ar'?'en':'ar'));
   })();
 </script>
+<script src="css/site.js" defer></script>
 </body>
 </html>

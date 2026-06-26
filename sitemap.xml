@@ -19,6 +19,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mabujadallah.github.io/projects.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mabujadallah.github.io/media.html</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>daily</changefreq>

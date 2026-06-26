@@ -7,7 +7,7 @@
 <meta name="description" content="PhD researcher at ÉTS Montréal studying AI coding agents, agentic pull requests, and the trustworthiness of AI-generated code.">
 <meta name="author" content="Mahmoud S. Y. Abujadallah">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#6D3BEB">
+<meta name="theme-color" content="#0969DA">
 <link rel="canonical" href="https://mabujadallah.github.io/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
@@ -62,9 +62,9 @@
     --ink-faint:#838c9b;
     --line:#E3E6EC;
     --line-strong:#cfd4dd;
-    --accent:#6D3BEB;        /* merged-purple, primary */
-    --accent-deep:#5326c4;
-    --accent-soft:rgba(109,59,235,.10);
+    --accent:#0969DA;        /* GitHub blue, primary */
+    --accent-deep:#0550AE;
+    --accent-soft:rgba(9,105,218,.10);
     --accept:#157f52;        /* + additions */
     --accept-soft:rgba(21,127,82,.10);
     --reject:#c0392b;        /* − deletions */
@@ -375,9 +375,9 @@ body{
     --ink-faint:#6f7989;
     --line:#222a37;
     --line-strong:#333d4d;
-    --accent:#9d80ff;
-    --accent-deep:#b9a6ff;
-    --accent-soft:rgba(157,128,255,.16);
+    --accent:#58A6FF;
+    --accent-deep:#79C0FF;
+    --accent-soft:rgba(88,166,255,.16);
     --accept:#43b985;
     --accept-soft:rgba(67,185,133,.16);
     --reject:#e5675a;
@@ -475,10 +475,9 @@ body{
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#research" data-i18n="nav.research">Research</a>
-      <a href="#experience" data-i18n="nav.experience">Experience</a>
-      <a href="#education" data-i18n="nav.education">Education</a>
       <a href="publications.html" data-i18n="nav.pubs">Publications</a>
       <a href="datasets.html" data-i18n="nav.data">Data</a>
+      <a href="projects.html" data-i18n="nav.projects">Projects</a>
       <a href="media.html" data-i18n="nav.media">Writing</a>
       <a href="#about" data-i18n="nav.about">About</a>
     </nav>
@@ -669,6 +668,52 @@ body{
       </article>
     </div>
     <a class="more-link reveal" href="datasets.html" data-i18n="data.viewAll">Explore the dataset →</a>
+  </div>
+</section>
+
+<!-- SELECTED WORK / PROJECTS -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Built · shipped</span>
+      <h2>Selected work</h2>
+      <p>Beyond the papers — data products, tools, and apps I&rsquo;ve built and shipped.</p>
+    </div>
+
+    <div class="pubs">
+      <article class="pub reveal">
+        <div class="pub-state">
+          <span class="tag merged">Shipped</span>
+          <span class="tag venue">Hugging Face · CC-BY-4.0</span>
+        </div>
+        <div>
+          <h3>GitHub Agentic PR Dataset</h3>
+          <p class="authors">1.96M pull requests · Python · Parquet · open data</p>
+          <div class="finding">A large-scale dataset of agent- and human-authored PRs — now used for agentic-AI and mining-software-repositories research.</div>
+          <div class="meta">
+            <span>Data product</span>
+            <a href="datasets.html">Details →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub reveal">
+        <div class="pub-state">
+          <span class="tag open">Active</span>
+          <span class="tag venue">Vanilla JS · 0 deps</span>
+        </div>
+        <div>
+          <h3>This site + feed automation</h3>
+          <p class="authors">HTML · CSS · JS · a daily GitHub Action</p>
+          <div class="finding">A dependency-free, PR-themed portfolio that keeps itself current by syncing my Medium &amp; YouTube feeds every day.</div>
+          <div class="meta">
+            <span>Web · automation</span>
+            <a href="https://github.com/mabujadallah/mabujadallah.github.io" target="_blank" rel="noopener">Source →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <a class="more-link reveal" href="projects.html">See all projects →</a>
   </div>
 </section>
 
@@ -870,45 +915,8 @@ body{
   </div>
 </footer>
 
+<script src="css/site.js" defer></script>
 <script>
-  // scroll progress
-  (function(){
-    const root = document.documentElement;
-    function update(){
-      const max = Math.max(1, root.scrollHeight - innerHeight);
-      root.style.setProperty('--scroll-progress', Math.min(pageYOffset / max, 1).toFixed(4));
-    }
-    update();
-    addEventListener('scroll', update, {passive:true});
-    addEventListener('resize', update);
-  })();
-
-  // scroll reveal: IO + viewport pass + watchdog so nothing stays hidden
-  (function(){
-    const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    const els = Array.from(document.querySelectorAll('.reveal'));
-    const reveal = el => el.classList.add('in');
-    if(reduce){ els.forEach(reveal); return; }
-    function visible(el){
-      const r = el.getBoundingClientRect();
-      return r.top < innerHeight * 0.96 && r.bottom > 0;
-    }
-    let io;
-    if('IntersectionObserver' in window){
-      io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ reveal(e.target); io.unobserve(e.target); } });
-      }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
-    }
-    els.forEach((el,i)=>{
-      el.style.transitionDelay = Math.min(i%4*70,210)+'ms';
-      if(visible(el)) reveal(el);
-      else if(io) io.observe(el);
-      else reveal(el);
-    });
-    setTimeout(()=>els.forEach(el=>{ if(!el.classList.contains('in') && visible(el)) reveal(el); }), 900);
-    setTimeout(()=>els.forEach(reveal), 2600);
-  })();
-
   // magnetic lift on hero buttons
   (function(){
     const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -921,21 +929,6 @@ body{
         btn.style.transform = `translate(${x*7}px, ${y*5-2}px)`;
       });
       btn.addEventListener('pointerleave', ()=>{ btn.style.transform = ''; });
-    });
-  })();
-
-  // theme toggle (light / dark), persisted
-  (function(){
-    const btn = document.getElementById('themeToggle');
-    if(!btn) return;
-    const root = document.documentElement;
-    const sync = ()=> btn.setAttribute('aria-pressed', root.getAttribute('data-theme') === 'dark');
-    sync();
-    btn.addEventListener('click', ()=>{
-      const dark = root.getAttribute('data-theme') === 'dark';
-      if(dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme','dark');
-      try{ localStorage.setItem('theme', dark ? 'light' : 'dark'); }catch(e){}
-      sync();
     });
   })();
 
