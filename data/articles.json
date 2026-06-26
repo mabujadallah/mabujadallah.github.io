@@ -2,6 +2,18 @@
   "source": "https://medium.com/@mabujadallah",
   "items": [
     {
+      "title": "Why a Two-Word Reply Can Cost 40% of Your AI Budget",
+      "url": "https://medium.com/@mabujadallah/why-a-two-word-reply-can-cost-40-of-your-ai-budget-537463431d6f?source=rss-8643104a94bb------2",
+      "date": "2026-06-26",
+      "snippet": "Long chats with AI assistants get expensive fast — and not for the reason most people think. Here is what is actually happening, and how to spend far less. I watched two short mess…",
+      "tags": [
+        "ai-agent",
+        "ai",
+        "software-engineering"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*yhHsTBbr0XXBRhYyOuPwrw.png"
+    },
+    {
       "title": "39.5 Million Pull Requests: A Dataset for the Age of AI Coding Agents",
       "url": "https://medium.com/@mabujadallah/39-5-million-pull-requests-a-dataset-for-the-age-of-ai-coding-agents-52e88743d84f?source=rss-8643104a94bb------2",
       "date": "2026-06-22",
@@ -50,5 +62,5 @@
       "image": "https://cdn-images-1.medium.com/max/800/1*CqzIjuIv-mvjXBECmc4k9A.png"
     }
   ],
-  "updated": "2026-06-22T22:39:37Z"
+  "updated": "2026-06-26T17:15:16Z"
 }
