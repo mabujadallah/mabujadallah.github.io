@@ -2,6 +2,19 @@
   "source": "https://medium.com/@mabujadallah",
   "items": [
     {
+      "title": "Claude Code on Your Phone: A Practical Guide to Remote Control",
+      "local": "posts/claude-code-on-your-phone-a-practical-guide-to-remote-control.html",
+      "url": "https://medium.com/@mabujadallah/claude-code-on-your-phone-a-practical-guide-to-remote-control-905bd258837c",
+      "date": "2026-06-27",
+      "snippet": "Start a coding task at your desk, then keep steering it from the couch — without your code ever touching the cloud. You kick off a long refactor in your terminal. Forty files, mayb…",
+      "tags": [
+        "mobile-app-development",
+        "software-development",
+        "remote-control"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*JtSOcxj0gQf0xqlZdrRwmg.png"
+    },
+    {
       "title": "Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?",
       "local": "posts/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html",
       "url": "https://medium.com/@mabujadallah/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized-6fa53c412a26",
@@ -80,5 +93,5 @@
       "image": "https://cdn-images-1.medium.com/max/800/1*CqzIjuIv-mvjXBECmc4k9A.png"
     }
   ],
-  "updated": "2026-06-27T12:23:30Z"
+  "updated": "2026-06-27T22:04:13Z"
 }
