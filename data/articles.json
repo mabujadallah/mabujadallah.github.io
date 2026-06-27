@@ -2,6 +2,19 @@
   "source": "https://medium.com/@mabujadallah",
   "items": [
     {
+      "title": "Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?",
+      "local": "posts/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html",
+      "url": "https://medium.com/@mabujadallah/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized-6fa53c412a26",
+      "date": "2026-06-26",
+      "snippet": "A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it. I installed Claude Code on a Windows machine last week. The installer told…",
+      "tags": [
+        "claude",
+        "software-development",
+        "ai-agent"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*FEA-I-ygztJKDFHaixL0Nw.png"
+    },
+    {
       "title": "Why a Two-Word Reply Can Cost 40% of Your AI Budget",
       "local": "posts/why-a-two-word-reply-can-cost-40-of-your-ai-budget.html",
       "url": "https://medium.com/@mabujadallah/why-a-two-word-reply-can-cost-40-of-your-ai-budget-537463431d6f",
@@ -67,5 +80,5 @@
       "image": "https://cdn-images-1.medium.com/max/800/1*CqzIjuIv-mvjXBECmc4k9A.png"
     }
   ],
-  "updated": "2026-06-26T21:54:12Z"
+  "updated": "2026-06-27T12:23:30Z"
 }

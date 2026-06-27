@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”? — Mahmoud S. Y. Abujadallah</title>
+<meta name="description" content="A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it. I installed Claude Code on a Windows machine last week. The installer told…">
+<meta name="author" content="Mahmoud S. Y. Abujadallah">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0969DA">
+<link rel="canonical" href="https://medium.com/@mabujadallah/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized-6fa53c412a26">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="article">
+<meta property="article:author" content="Mahmoud S. Y. Abujadallah">
+<meta property="article:published_time" content="2026-06-26">
+<meta property="og:title" content="Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?">
+<meta property="og:description" content="A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it. I installed Claude Code on a Windows machine last week. The installer told…">
+<meta property="og:url" content="https://mabujadallah.github.io/posts/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1024/1*FEA-I-ygztJKDFHaixL0Nw.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?">
+<meta name="twitter:description" content="A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it. I installed Claude Code on a Windows machine last week. The installer told…">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1024/1*FEA-I-ygztJKDFHaixL0Nw.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<script>
+  document.documentElement.classList.add('js');
+  (function(){try{
+    var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}})();
+</script>
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><span class="mono-badge">MA</span><span>Mahmoud&nbsp;Abujadallah</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html#research">Research</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../datasets.html">Data</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../media.html" aria-current="page">Writing &amp; Talks</a>
+      <a href="../index.html#about">About</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap article-layout">
+    <article class="article-main">
+      <div class="article-head">
+        <a class="back" href="../media.html">← Writing &amp; Talks</a>
+        <h1>Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?</h1>
+        <div class="article-meta">
+          <span>June 26, 2026</span>
+          <span>4 min read</span>
+          <a href="https://medium.com/@mabujadallah/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized-6fa53c412a26" target="_blank" rel="noopener">Originally on Medium ↗</a>
+        </div>
+      </div>
+      <div class="prose">
+<h3>A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it.</h3><p>I installed Claude Code on a Windows machine last week. The installer told me, in a cheerful green checkmark, that everything had succeeded. Then I typed claude --version and PowerShell answered with a wall of red:</p><pre>claude : The term &#39;claude&#39; is not recognized as the name of a cmdlet,<br>function, script file, or operable program.</pre><p>If you have hit this, the instinct is to assume the install failed and start over. It almost certainly didn’t. After walking through the whole chain — download error, PATH entry, terminal session — I came out the other side with a clear picture of where Windows trips you up. This is that picture, in the order the problems actually appear.</p><figure><img loading="lazy" decoding="async" alt="" src="https://cdn-images-1.medium.com/max/1024/1*FEA-I-ygztJKDFHaixL0Nw.png" /></figure><h3>First, the install itself</h3><p>The recommended way to install Claude Code on Windows in 2026 is the native installer. No Node.js, no npm, no manual PATH work. In PowerShell:</p><pre>irm https://claude.ai/install.ps1 | iex</pre><p>The first time I ran this, it died partway through:</p><pre>Failed to download binary: Unable to read data from the transport<br>connection: An established connection was aborted by the software in<br>your host machine.</pre><p>This is not a script bug. The wrapper script downloaded fine; the <em>binary</em> it then reaches for (hosted on Google’s storage) had its connection cut. The usual suspects are a VPN, a firewall, an antivirus filter, or a corporate proxy sitting between you and the download host. Turning the VPN off and running the command again was enough in my case. If you are on a restricted network and it keeps failing, two fallbacks use a different path entirely:</p><pre>winget install Anthropic.ClaudeCode</pre><p>or, the deprecated-but-functional npm route (needs Node 18+):</p><pre>npm install -g @anthropic-ai/claude-code</pre><p>On the retry, the install finished cleanly:</p><pre>Claude Code successfully installed!<br>Version: 2.1.193<br>Location: C:\Users\&lt;you&gt;\.local\bin\claude.exe</pre><p>And right underneath, the warning that explains everything that came next:</p><pre>Native installation exists but C:\Users\&lt;you&gt;\.local\bin is not in<br>your PATH.</pre><h3>The part everyone misreads</h3><p>The binary is real. You can prove it:</p><pre>Test-Path &quot;$env:USERPROFILE\.local\bin\claude.exe&quot;<br># True</pre><p>It just lives in a folder Windows doesn’t search when you type a command. So you add that folder to your User PATH — the GUI works, but one line is faster:</p><pre>[Environment]::SetEnvironmentVariable(&quot;Path&quot;, $env:Path + &quot;;$env:USERPROFILE\.local\bin&quot;, &quot;User&quot;)</pre><p>Run claude --version. Same red error.</p><p>This is the moment people give up, reinstall, switch to WSL, or start editing PATH by hand in the System Properties dialog. None of that is necessary, because nothing is actually wrong. <strong>A PowerShell session loads its PATH once, when it opens.</strong> Changing the saved PATH afterward does not reach back into a window that is already running. Your edit is correct; the terminal you are typing into simply hasn’t read it.</p><p>So the fix is not another PATH edit. It is a fresh shell:</p><ul><li>Close the PowerShell window completely and open a new one, <strong>or</strong></li><li>Pull the updated PATH into the live session without restarting:</li></ul><pre>$env:Path = [Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;User&quot;) + &quot;;&quot; + [Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;Machine&quot;)<br>claude --version<br># 2.1.193</pre><h3>If it still fails (it probably won’t)</h3><p>Before assuming anything exotic, confirm the two facts the fix depends on. That the folder is truly saved:</p><pre>[Environment]::GetEnvironmentVariable(&quot;Path&quot;,&quot;User&quot;) -split &#39;;&#39; | Select-String &quot;local&quot;</pre><p>You should see ...\.local\bin in the list. And — a genuine footgun — check that your PATH didn&#39;t get silently truncated. The SetEnvironmentVariable approach above writes your entire current PATH back into the User PATH, and Windows can quietly cut off a string that grows too long, lopping off whatever you just appended:</p><pre>($env:Path).Length</pre><p>A few hundred characters is nothing to worry about. If you are up in the thousands and the entry keeps vanishing, that truncation is your real problem, and adding the folder through the Environment Variables GUI (which edits the User PATH in isolation) sidesteps it.</p><p>If the folder is present, the binary exists, and a fresh terminal still can’t find it, where.exe claude will tell you what the shell is actually resolving — but at that point you have left the common case behind.</p><h3>The one thing worth remembering</h3><p>The error text looks catastrophic and points at the wrong thing. Strip it down and almost every Windows “claude is not recognized” report is one of three states: the binary isn’t there, the folder isn’t on PATH, or — most often — the terminal you are staring at was opened before you fixed the PATH. The install was fine all along. You just needed a new window.</p><p><em>One note unrelated to PATH: Claude Code requires a Pro, Max, Team, Enterprise, or Console account. The free plan doesn’t include it, so once </em><em>claude resolves, that&#39;s the next thing it will ask you about.</em></p><img loading="lazy" decoding="async" src="https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=6fa53c412a26" width="1" height="1" alt="">
+      </div>
+      <div class="article-foot">
+        <a class="read-on-medium" href="https://medium.com/@mabujadallah/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized-6fa53c412a26" target="_blank" rel="noopener">Read &amp; clap on Medium ↗</a>
+        <a class="back" href="../media.html">← All writing &amp; talks</a>
+      </div>
+    </article>
+    <aside class="article-rail" aria-label="More writing">
+      <div class="rail-sticky">
+        <span class="rail-label">More writing</span>
+        <ul class="rail-list">
+          <li><a href="why-a-two-word-reply-can-cost-40-of-your-ai-budget.html"><span class="rail-title">Why a Two-Word Reply Can Cost 40% of Your AI Budget</span><span class="rail-date">June 26, 2026</span></a></li>
+          <li><a href="39-5-million-pull-requests-a-dataset-for-the-age-of-ai-coding-agents.html"><span class="rail-title">39.5 Million Pull Requests: A Dataset for the Age of AI Coding Agents</span><span class="rail-date">June 22, 2026</span></a></li>
+          <li><a href="half-of-ai-generated-bug-fixes-get-rejected-we-read-306-of-them-to-find-out-why.html"><span class="rail-title">Half of AI-Generated Bug Fixes Get Rejected. We Read 306 of Them to Find Out Why.</span><span class="rail-date">June 21, 2026</span></a></li>
+          <li><a href="cursor-is-quietly-becoming-an-agent-operating-system.html"><span class="rail-title">Cursor Is Quietly Becoming an Agent Operating System</span><span class="rail-date">June 19, 2026</span></a></li>
+          <li><a href="how-ai-coding-agents-changed-the-way-i-build-android-apps.html"><span class="rail-title">How AI Coding Agents Changed the Way I Build Android Apps</span><span class="rail-date">June 18, 2026</span></a></li>
+        </ul>
+        <a class="rail-all" href="../media.html">All writing &amp; talks →</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Mahmoud S. Y. Abujadallah</span>
+    <span>ÉTS Montréal · Gaza, Palestine</span>
+  </div>
+</footer>
+<script src="../css/site.js" defer></script>
+</body>
+</html>
