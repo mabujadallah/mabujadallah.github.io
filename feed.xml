@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mahmoud S. Y. Abujadallah — Writing</title>
+    <link>https://mabujadallah.github.io/media.html</link>
+    <atom:link href="https://mabujadallah.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Essays on AI for software engineering, AI coding agents, and large language models.</description>
+    <language>en</language>
+    <lastBuildDate>Mon, 29 Jun 2026 21:24:28 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code on Your Phone: A Practical Guide to Remote Control</title>
+      <link>https://mabujadallah.github.io/posts/claude-code-on-your-phone-a-practical-guide-to-remote-control.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/claude-code-on-your-phone-a-practical-guide-to-remote-control.html</guid>
+      <pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
+      <description>Start a coding task at your desk, then keep steering it from the couch — without your code ever touching the cloud. You kick off a long refactor in your terminal. Forty files, mayb…</description>
+      <category>mobile-app-development</category>
+      <category>software-development</category>
+      <category>remote-control</category>
+    </item>
+    <item>
+      <title>Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?</title>
+      <link>https://mabujadallah.github.io/posts/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html</guid>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <description>A short field note on the one Windows quirk that wastes an afternoon — and the one-line fix that ends it. I installed Claude Code on a Windows machine last week. The installer told…</description>
+      <category>claude</category>
+      <category>software-development</category>
+      <category>ai-agent</category>
+    </item>
+    <item>
+      <title>Why a Two-Word Reply Can Cost 40% of Your AI Budget</title>
+      <link>https://mabujadallah.github.io/posts/why-a-two-word-reply-can-cost-40-of-your-ai-budget.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/why-a-two-word-reply-can-cost-40-of-your-ai-budget.html</guid>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <description>Long chats with AI assistants get expensive fast — and not for the reason most people think. Here is what is actually happening, and how to spend far less. I watched two short mess…</description>
+      <category>ai-agent</category>
+      <category>ai</category>
+      <category>software-engineering</category>
+    </item>
+    <item>
+      <title>39.5 Million Pull Requests: A Dataset for the Age of AI Coding Agents</title>
+      <link>https://mabujadallah.github.io/posts/39-5-million-pull-requests-a-dataset-for-the-age-of-ai-coding-agents.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/39-5-million-pull-requests-a-dataset-for-the-age-of-ai-coding-agents.html</guid>
+      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
+      <description>A year ago, an AI agent opening a pull request on GitHub was a novelty worth a screenshot. Today it’s infrastructure. Claude Code, Copilot’s coding agent, Devin, Cursor, and others…</description>
+      <category>ai-agent</category>
+      <category>software-engineering</category>
+      <category>github</category>
+    </item>
+    <item>
+      <title>Half of AI-Generated Bug Fixes Get Rejected. We Read 306 of Them to Find Out Why.</title>
+      <link>https://mabujadallah.github.io/posts/half-of-ai-generated-bug-fixes-get-rejected-we-read-306-of-them-to-find-out-why.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/half-of-ai-generated-bug-fixes-get-rejected-we-read-306-of-them-to-find-out-why.html</guid>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <description>There’s a quiet assumption baked into the current wave of coding agents: point one at a bug, let it open a pull request, and a good chunk of the time you’ll get a mergeable fix. Gi…</description>
+      <category>pull-request</category>
+      <category>ai-agent</category>
+      <category>github</category>
+    </item>
+    <item>
+      <title>Cursor Is Quietly Becoming an Agent Operating System</title>
+      <link>https://mabujadallah.github.io/posts/cursor-is-quietly-becoming-an-agent-operating-system.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/cursor-is-quietly-becoming-an-agent-operating-system.html</guid>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <description>If you’ve been using Cursor as “VS Code with a smarter autocomplete,” the last few weeks have been a signal that the product is heading somewhere very different. Across June 2026,…</description>
+      <category>cursor-ai</category>
+      <category>cv</category>
+      <category>cursor</category>
+    </item>
+    <item>
+      <title>How AI Coding Agents Changed the Way I Build Android Apps</title>
+      <link>https://mabujadallah.github.io/posts/how-ai-coding-agents-changed-the-way-i-build-android-apps.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/how-ai-coding-agents-changed-the-way-i-build-android-apps.html</guid>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+      <description>A practical field guide to Claude Code, Cursor, and Gemini in Android Studio, where the real speedups are, and where the hype quietly falls apart. The unit of work shifted from a l…</description>
+      <category>ai-agent</category>
+      <category>mobile-app-development</category>
+      <category>ai-coding-agent</category>
+    </item>
+  </channel>
+</rss>

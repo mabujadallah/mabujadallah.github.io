@@ -253,4 +253,49 @@
       if (!isOpen && !typing && e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); openModal(); }
     });
   })();
+
+  // Article reading aids: copy-to-clipboard buttons on code blocks, and an
+  // auto table of contents for long posts. No-ops where those elements absent.
+  (function () {
+    // --- copy buttons on code blocks (article prose + dataset snippets) ---
+    Array.prototype.forEach.call(document.querySelectorAll('.prose pre, pre.code'), function (pre) {
+      if (pre.querySelector('.copy-btn')) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+      pre.appendChild(btn);
+      btn.addEventListener('click', function () {
+        var clone = pre.cloneNode(true);
+        var b = clone.querySelector('.copy-btn'); if (b) b.remove();
+        var code = (clone.textContent || '').replace(/\s+$/, '');
+        var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+        if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, done); else done();
+      });
+    });
+
+    // --- table of contents for long articles ---
+    var prose = document.querySelector('.prose');
+    if (!prose) return;
+    var heads = prose.querySelectorAll('h2, h3');
+    if (heads.length < 3) return;
+    var esc = function (s) { return (s || '').replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); };
+    var slug = function (s) { return (s || '').toLowerCase().replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-').slice(0, 60) || 'section'; };
+    var used = {}, items = [];
+    Array.prototype.forEach.call(heads, function (h) {
+      if (!h.id) {
+        var base = slug(h.textContent), id = base, n = 2;
+        while (used[id] || document.getElementById(id)) { id = base + '-' + n++; }
+        h.id = id;
+      }
+      used[h.id] = true;
+      items.push('<li class="toc-' + h.tagName.toLowerCase() + '"><a href="#' + h.id + '">' + esc(h.textContent) + '</a></li>');
+    });
+    var toc = document.createElement('details');
+    toc.className = 'toc';
+    toc.open = true;
+    toc.innerHTML = '<summary>On this page</summary><ul>' + items.join('') + '</ul>';
+    prose.parentNode.insertBefore(toc, prose);
+  })();
 })();

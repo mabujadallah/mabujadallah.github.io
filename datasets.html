@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#0969DA">
 <link rel="canonical" href="https://mabujadallah.github.io/datasets.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Mahmoud S. Y. Abujadallah — Writing" href="/feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="GitHub Agentic PR Dataset — Mahmoud S. Y. Abujadallah">
 <meta property="og:description" content="~2M GitHub pull requests from AI coding agents (Claude Code, Cursor, Copilot, Devin) and humans, with 6.7M commits and 55M file-level diffs. Open data for agentic AI and software engineering research.">
@@ -135,6 +136,30 @@
   .ds-btn.primary:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
   .ds-h2{font-family:var(--display);font-weight:600;font-size:1.45rem;letter-spacing:-.02em;margin:36px 0 4px}
   .ds-lead{color:var(--ink-soft);max-width:70ch;margin:.6rem 0 0}
+  /* interactive explorer: agent bar chart + sortable/filterable table */
+  .seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:9px;overflow:hidden;margin-bottom:16px}
+  .seg-btn{font-family:var(--mono);font-size:12.5px;padding:7px 14px;background:var(--paper-raised);color:var(--ink-soft);border:0;cursor:pointer;border-right:1px solid var(--line-strong)}
+  .seg-btn:last-child{border-right:0}
+  .seg-btn.is-active{background:var(--accent);color:#fff}
+  .ds-bars{display:flex;flex-direction:column;gap:13px}
+  .ds-bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:5px;font-size:.92rem}
+  .ds-bar-name{font-weight:600}
+  .ds-bar-val{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+  .ds-bar-pct{color:var(--ink-faint)}
+  .ds-bar-track{height:12px;background:var(--paper);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .ds-bar-fill{height:100%;border-radius:999px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .a-claude{background:var(--accent)}
+  .a-cursor{background:#8957e5}
+  .a-copilot{background:#2da44e}
+  .a-devin{background:#bf8700}
+  .a-human{background:var(--ink-faint)}
+  .ds-filter{width:100%;max-width:340px;font-family:var(--mono);font-size:13px;padding:9px 13px;border:1px solid var(--line-strong);border-radius:9px;background:var(--paper-raised);color:var(--ink)}
+  .ds-filter:focus{outline:none;border-color:var(--accent)}
+  .ds-table th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+  .ds-table th.sortable:hover{color:var(--accent)}
+  .ds-table th.sortable::after{content:"⇅";opacity:.4;margin-left:6px;font-size:10px}
+  .ds-table th.sortable[aria-sort="ascending"]::after{content:"↑";opacity:1}
+  .ds-table th.sortable[aria-sort="descending"]::after{content:"↓";opacity:1}
 </style>
 <script>
   document.documentElement.classList.add('js');
@@ -203,34 +228,43 @@
 
     <section aria-label="Agents covered">
       <h2 class="ds-h2 reveal">Coding agents covered</h2>
-      <p class="ds-lead reveal">Every agent-authored pull request is labelled with the tool that produced it.</p>
-      <div class="ds-chips reveal" style="margin-top:14px">
-        <span class="ds-chip"><b>Claude Code</b> 419,965 PRs</span>
-        <span class="ds-chip"><b>Cursor</b> 200,166 PRs</span>
-        <span class="ds-chip"><b>GitHub Copilot</b> 117,863 PRs</span>
-        <span class="ds-chip"><b>Devin</b> 35,519 PRs</span>
-        <span class="ds-chip"><b>Humans</b> 1,186,136 PRs</span>
+      <p class="ds-lead reveal">Every agent-authored pull request is labelled with the tool that produced it. Toggle humans in to see the full split.</p>
+      <div class="ds-explorer reveal" style="margin-top:16px">
+        <div class="seg" role="group" aria-label="Chart view">
+          <button type="button" class="seg-btn is-active" data-view="agents">Agents only</button>
+          <button type="button" class="seg-btn" data-view="all">Include humans</button>
+        </div>
+        <div class="ds-bars" id="agentBars">
+          <div class="ds-chips">
+            <span class="ds-chip"><b>Claude Code</b> 419,965 PRs</span>
+            <span class="ds-chip"><b>Cursor</b> 200,166 PRs</span>
+            <span class="ds-chip"><b>GitHub Copilot</b> 117,863 PRs</span>
+            <span class="ds-chip"><b>Devin</b> 35,519 PRs</span>
+            <span class="ds-chip"><b>Humans</b> 1,186,136 PRs</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <section aria-label="What's inside">
       <h2 class="ds-h2 reveal">What&rsquo;s inside</h2>
-      <p class="ds-lead reveal">Nine Parquet tables span three levels — pull requests, commits, and file-level diffs — joined on <code>id</code> → <code>pr_id</code> → <code>sha</code>.</p>
-      <div class="table-scroll reveal" style="margin-top:14px">
-        <table class="ds-table">
+      <p class="ds-lead reveal">Nine Parquet tables span three levels — pull requests, commits, and file-level diffs — joined on <code>id</code> → <code>pr_id</code> → <code>sha</code>. Click a header to sort, or filter by name.</p>
+      <input type="search" id="filesFilter" class="ds-filter reveal" style="margin-top:14px" placeholder="Filter tables… (e.g. fix, commit)" aria-label="Filter tables" autocomplete="off">
+      <div class="table-scroll reveal" style="margin-top:12px">
+        <table class="ds-table" id="filesTable">
           <thead>
-            <tr><th>File</th><th>Rows</th><th>What it is</th></tr>
+            <tr><th class="sortable" data-key="file">File</th><th class="sortable" data-key="rows">Rows</th><th>What it is</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>all_pull_requests</code></td><td class="n">1,959,649</td><td>The full corpus — every PR (human + agent).</td></tr>
-            <tr><td><code>agent_pull_requests</code></td><td class="n">275,377</td><td>A focused collection of agent-authored PRs.</td></tr>
-            <tr><td><code>human_pull_requests</code></td><td class="n">1,186,136</td><td>Human-authored PRs only.</td></tr>
-            <tr><td><code>fix_classified_prs</code></td><td class="n">1,959,649</td><td>All PRs labelled with <code>type</code> (fix/other) and <code>source</code> (human/agent).</td></tr>
-            <tr><td><code>fix_prs_only</code></td><td class="n">422,618</td><td>Only the PRs classified as bug-fixes.</td></tr>
-            <tr><td><code>pr_commits</code></td><td class="n">6,737,000</td><td>Commit metadata linked to PRs.</td></tr>
-            <tr><td><code>pr_commit_details</code></td><td class="n">55,040,478</td><td>File-level changes with raw <code>patch</code> diffs.</td></tr>
-            <tr><td><code>fix_pr_commits</code></td><td class="n">1,156,238</td><td>Commits belonging to bug-fix PRs.</td></tr>
-            <tr><td><code>fix_pr_commit_details</code></td><td class="n">7,451,150</td><td>File-level changes for bug-fix PRs.</td></tr>
+            <tr><td><code>all_pull_requests</code></td><td class="n" data-n="1959649">1,959,649</td><td>The full corpus — every PR (human + agent).</td></tr>
+            <tr><td><code>agent_pull_requests</code></td><td class="n" data-n="275377">275,377</td><td>A focused collection of agent-authored PRs.</td></tr>
+            <tr><td><code>human_pull_requests</code></td><td class="n" data-n="1186136">1,186,136</td><td>Human-authored PRs only.</td></tr>
+            <tr><td><code>fix_classified_prs</code></td><td class="n" data-n="1959649">1,959,649</td><td>All PRs labelled with <code>type</code> (fix/other) and <code>source</code> (human/agent).</td></tr>
+            <tr><td><code>fix_prs_only</code></td><td class="n" data-n="422618">422,618</td><td>Only the PRs classified as bug-fixes.</td></tr>
+            <tr><td><code>pr_commits</code></td><td class="n" data-n="6737000">6,737,000</td><td>Commit metadata linked to PRs.</td></tr>
+            <tr><td><code>pr_commit_details</code></td><td class="n" data-n="55040478">55,040,478</td><td>File-level changes with raw <code>patch</code> diffs.</td></tr>
+            <tr><td><code>fix_pr_commits</code></td><td class="n" data-n="1156238">1,156,238</td><td>Commits belonging to bug-fix PRs.</td></tr>
+            <tr><td><code>fix_pr_commit_details</code></td><td class="n" data-n="7451150">7,451,150</td><td>File-level changes for bug-fix PRs.</td></tr>
           </tbody>
         </table>
       </div>
@@ -323,6 +357,74 @@ print(df[<span class="s">"agent"</span>].value_counts())</pre>
   </div>
 </footer>
 
+<script>
+(function(){
+  // --- agent breakdown bar chart (real per-agent PR counts) ---
+  var DATA = [
+    {name:'Claude Code',   prs:419965,  agent:true,  cls:'a-claude'},
+    {name:'Cursor',        prs:200166,  agent:true,  cls:'a-cursor'},
+    {name:'GitHub Copilot',prs:117863,  agent:true,  cls:'a-copilot'},
+    {name:'Devin',         prs:35519,   agent:true,  cls:'a-devin'},
+    {name:'Humans',        prs:1186136, agent:false, cls:'a-human'}
+  ];
+  var mount = document.getElementById('agentBars');
+  var seg = document.querySelector('.ds-explorer .seg');
+  var view = 'agents';
+  var fmt = function(n){ return n.toLocaleString('en-US'); };
+  function render(){
+    if(!mount) return;
+    var rows = DATA.filter(function(d){ return view === 'all' || d.agent; });
+    var total = rows.reduce(function(s,d){ return s + d.prs; }, 0);
+    var max = Math.max.apply(null, rows.map(function(d){ return d.prs; }));
+    mount.innerHTML = rows.map(function(d){
+      var pct = (d.prs / total * 100), w = (d.prs / max * 100);
+      return '<div class="ds-bar">' +
+        '<div class="ds-bar-head"><span class="ds-bar-name">' + d.name + '</span>' +
+        '<span class="ds-bar-val">' + fmt(d.prs) + ' <span class="ds-bar-pct">' + pct.toFixed(1) + '%</span></span></div>' +
+        '<div class="ds-bar-track"><div class="ds-bar-fill ' + d.cls + '" style="width:' + w.toFixed(1) + '%"></div></div>' +
+      '</div>';
+    }).join('');
+  }
+  render();
+  if(seg){
+    seg.addEventListener('click', function(e){
+      var b = e.target.closest('.seg-btn'); if(!b) return;
+      view = b.getAttribute('data-view');
+      Array.prototype.forEach.call(seg.querySelectorAll('.seg-btn'), function(x){ x.classList.toggle('is-active', x === b); });
+      render();
+    });
+  }
+
+  // --- sortable + filterable files table ---
+  var table = document.getElementById('filesTable');
+  var filter = document.getElementById('filesFilter');
+  if(table){
+    var tbody = table.tBodies[0];
+    var rows = Array.prototype.slice.call(tbody.rows);
+    var dir = 1, sortKey = null;
+    Array.prototype.forEach.call(table.querySelectorAll('th.sortable'), function(th){
+      th.addEventListener('click', function(){
+        var key = th.getAttribute('data-key');
+        dir = (sortKey === key) ? -dir : 1; sortKey = key;
+        Array.prototype.forEach.call(table.querySelectorAll('th'), function(x){ x.removeAttribute('aria-sort'); });
+        th.setAttribute('aria-sort', dir > 0 ? 'ascending' : 'descending');
+        rows.slice().sort(function(a,b){
+          var va, vb;
+          if(key === 'rows'){ va = +a.cells[1].getAttribute('data-n'); vb = +b.cells[1].getAttribute('data-n'); }
+          else { va = a.cells[0].textContent.trim().toLowerCase(); vb = b.cells[0].textContent.trim().toLowerCase(); }
+          return va < vb ? -dir : va > vb ? dir : 0;
+        }).forEach(function(r){ tbody.appendChild(r); });
+      });
+    });
+    if(filter){
+      filter.addEventListener('input', function(){
+        var q = filter.value.trim().toLowerCase();
+        rows.forEach(function(r){ r.style.display = (!q || r.textContent.toLowerCase().indexOf(q) > -1) ? '' : 'none'; });
+      });
+    }
+  }
+})();
+</script>
 <script src="css/site.js" defer></script>
 </body>
 </html>

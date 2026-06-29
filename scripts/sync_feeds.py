@@ -151,6 +151,7 @@ PAGE = Template("""<!doctype html>
 <meta name="theme-color" content="#0969DA">
 <link rel="canonical" href="$canonical">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="$author — Writing" href="/feed.xml">
 <meta property="og:type" content="article">
 <meta property="article:author" content="$author">
 <meta property="article:published_time" content="$date">
@@ -328,6 +329,96 @@ def update_sitemap(posts):
 
 
 # --------------------------------------------------------------------------- #
+#  RSS feed + IndexNow (instant search-engine notification)
+# --------------------------------------------------------------------------- #
+INDEXNOW_KEY = "a7f3c1e94b6d2058f1c8e3a9d4b70e62"
+
+
+def rfc822(date_str):
+    """YYYY-MM-DD -> RFC-822 datetime (midnight UTC) for RSS pubDate."""
+    try:
+        d = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        d = datetime.datetime.now(datetime.timezone.utc)
+    return d.replace(tzinfo=datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
+
+
+def write_feed(posts, limit=20):
+    """RSS 2.0 feed of the latest posts, linking to the on-site article pages."""
+    now = datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
+    items = []
+    for p in posts[:limit]:
+        link = f"{BASE_URL}/posts/{p['slug']}.html"
+        cats = "".join(f"\n      <category>{esc(t)}</category>"
+                       for t in (p.get("tags") or []))
+        items.append(
+            "    <item>\n"
+            f"      <title>{esc(p.get('title', ''))}</title>\n"
+            f"      <link>{link}</link>\n"
+            f'      <guid isPermaLink="true">{link}</guid>\n'
+            f"      <pubDate>{rfc822(p.get('date', ''))}</pubDate>\n"
+            f"      <description>{esc(p.get('snippet', ''))}</description>"
+            f"{cats}\n"
+            "    </item>"
+        )
+    feed = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        "  <channel>\n"
+        f"    <title>{esc(AUTHOR)} — Writing</title>\n"
+        f"    <link>{BASE_URL}/media.html</link>\n"
+        f'    <atom:link href="{BASE_URL}/feed.xml" rel="self" type="application/rss+xml"/>\n'
+        "    <description>Essays on AI for software engineering, AI coding agents, "
+        "and large language models.</description>\n"
+        "    <language>en</language>\n"
+        f"    <lastBuildDate>{now}</lastBuildDate>\n"
+        + "\n".join(items) + "\n"
+        "  </channel>\n"
+        "</rss>\n"
+    )
+    (ROOT / "feed.xml").write_text(feed, "utf-8")
+    print(f"wrote feed.xml: {min(len(posts), limit)} item(s)")
+
+
+def ensure_indexnow_key():
+    """The IndexNow key must be fetchable as a text file at the site root."""
+    key_file = ROOT / f"{INDEXNOW_KEY}.txt"
+    if not key_file.exists():
+        key_file.write_text(INDEXNOW_KEY, "utf-8")
+
+
+def changed_post_urls(old_items, posts):
+    """URLs of posts that are new or whose title/content changed since last run."""
+    old = {p.get("slug"): p for p in old_items}
+    urls = []
+    for p in posts:
+        prev = old.get(p["slug"])
+        if (prev is None or prev.get("content") != p.get("content")
+                or prev.get("title") != p.get("title")):
+            urls.append(f"{BASE_URL}/posts/{p['slug']}.html")
+    return urls
+
+
+def ping_indexnow(urls):
+    """Notify IndexNow (Bing, Yandex, …) that these URLs changed. Best-effort."""
+    if not urls:
+        print("indexnow: nothing changed, skipping")
+        return
+    ensure_indexnow_key()
+    payload = json.dumps({
+        "host": urllib.parse.urlsplit(BASE_URL).netloc,
+        "key": INDEXNOW_KEY,
+        "keyLocation": f"{BASE_URL}/{INDEXNOW_KEY}.txt",
+        "urlList": [f"{BASE_URL}/media.html", f"{BASE_URL}/feed.xml"] + urls,
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.indexnow.org/indexnow", data=payload, method="POST",
+        headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        print(f"indexnow: submitted {len(urls)} changed url(s) -> HTTP {r.status}")
+
+
+# --------------------------------------------------------------------------- #
 #  YouTube (cards only, unchanged behaviour)
 # --------------------------------------------------------------------------- #
 def resolve_channel_id():
@@ -389,6 +480,12 @@ def sync_medium():
     write_posts(posts)
     write_articles_index(posts)
     update_sitemap(posts)
+    write_feed(posts)
+    ensure_indexnow_key()
+    try:  # search-engine ping is best-effort; never fail the sync over it
+        ping_indexnow(changed_post_urls(store.get("items", []), posts))
+    except Exception as exc:
+        print(f"WARN indexnow: {exc}", file=sys.stderr)
     print(f"medium: {len(fresh)} from feed, {len(posts)} total in archive")
 
 

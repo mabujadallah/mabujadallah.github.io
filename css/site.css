@@ -314,3 +314,29 @@ html[data-theme="dark"] .prose pre{background:#05070b}
 html[data-theme="dark"] .hit-type{background:#222a37}
 html[data-theme="dark"] .search-backdrop{background:rgba(0,0,0,.62)}
 @media(max-width:560px){.search-modal{padding:8vh 12px 12px}.search-foot{display:none}}
+
+/* ---- article reading aids: copy buttons + table of contents ---- */
+.prose pre,pre.code{position:relative}
+.copy-btn{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:11px;line-height:1;padding:5px 9px;border-radius:7px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#e7ebf2;cursor:pointer;opacity:0;transition:opacity .15s,background .15s}
+.prose pre:hover .copy-btn,pre.code:hover .copy-btn,.copy-btn:focus-visible{opacity:1}
+.copy-btn:hover{background:rgba(255,255,255,.18)}
+@media(hover:none){.copy-btn{opacity:1}}
+.prose h2[id],.prose h3[id]{scroll-margin-top:84px}
+.toc{margin:0 0 26px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-raised);padding:4px 16px}
+.toc>summary{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;padding:10px 0;list-style:none}
+.toc>summary::-webkit-details-marker{display:none}
+.toc>summary::before{content:"▸";display:inline-block;margin-right:8px;transition:transform .15s}
+.toc[open]>summary::before{transform:rotate(90deg)}
+.toc ul{list-style:none;margin:0 0 8px;padding:0;columns:2;column-gap:28px}
+.toc li{break-inside:avoid;margin:3px 0}
+.toc li.toc-h3{padding-left:14px}
+.toc a{color:var(--ink-soft);font-size:.9rem;text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{color:var(--accent);border-bottom-color:var(--accent-soft)}
+@media(max-width:640px){.toc ul{columns:1}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* ---- RSS subscribe link (Writing page) ---- */
+.rss-sub{margin-top:14px}
+.rss-sub a{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:999px;padding:7px 14px;transition:border-color .2s,color .2s}
+.rss-sub a:hover{border-color:var(--accent);color:var(--accent)}
+.rss-sub svg{width:15px;height:15px;color:#ee802f}
