@@ -6,7 +6,27 @@
     <atom:link href="https://mabujadallah.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Essays on AI for software engineering, AI coding agents, and large language models.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 29 Jun 2026 21:24:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 15:31:33 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code, Command by Command — Part 2: Context and Memory</title>
+      <link>https://mabujadallah.github.io/posts/claude-code-command-by-command-part-2-context-and-memory.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/claude-code-command-by-command-part-2-context-and-memory.html</guid>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <description>Part 2 of a simple, practical series. Part 1 covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and wha…</description>
+      <category>claude</category>
+      <category>claude-code</category>
+      <category>software-engineering</category>
+    </item>
+    <item>
+      <title>Claude Code, Command by Command — Part 1: The Commands You Use Every Day</title>
+      <link>https://mabujadallah.github.io/posts/claude-code-command-by-command-part-1-the-commands-you-use-every-day.html</link>
+      <guid isPermaLink="true">https://mabujadallah.github.io/posts/claude-code-command-by-command-part-1-the-commands-you-use-every-day.html</guid>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+      <description>A simple, practical series for anyone who installed Claude Code, pressed /, and felt lost. When you press / in Claude Code, around eighty commands show up. That's a lot, and most g…</description>
+      <category>ai-agent</category>
+      <category>claude-code</category>
+      <category>command-line</category>
+    </item>
     <item>
       <title>Claude Code on Your Phone: A Practical Guide to Remote Control</title>
       <link>https://mabujadallah.github.io/posts/claude-code-on-your-phone-a-practical-guide-to-remote-control.html</link>

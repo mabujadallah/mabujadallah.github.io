@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code, Command by Command — Part 2: Context and Memory — Mahmoud S. Y. Abujadallah</title>
+<meta name="description" content="Part 2 of a simple, practical series. Part 1 covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and wha…">
+<meta name="author" content="Mahmoud S. Y. Abujadallah">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0969DA">
+<link rel="canonical" href="https://medium.com/@mabujadallah/claude-code-command-by-command-part-2-context-and-memory-68e8263f196d">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Mahmoud S. Y. Abujadallah — Writing" href="/feed.xml">
+<meta property="og:type" content="article">
+<meta property="article:author" content="Mahmoud S. Y. Abujadallah">
+<meta property="article:published_time" content="2026-06-30">
+<meta property="og:title" content="Claude Code, Command by Command — Part 2: Context and Memory">
+<meta property="og:description" content="Part 2 of a simple, practical series. Part 1 covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and wha…">
+<meta property="og:url" content="https://mabujadallah.github.io/posts/claude-code-command-by-command-part-2-context-and-memory.html">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1024/1*vBZQPnG5GYwlP_bQcRmjDw.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code, Command by Command — Part 2: Context and Memory">
+<meta name="twitter:description" content="Part 2 of a simple, practical series. Part 1 covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and wha…">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1024/1*vBZQPnG5GYwlP_bQcRmjDw.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<script>
+  document.documentElement.classList.add('js');
+  (function(){try{
+    var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}})();
+</script>
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html"><span class="mono-badge">MA</span><span>Mahmoud&nbsp;Abujadallah</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html#research">Research</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../datasets.html">Data</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../media.html" aria-current="page">Writing &amp; Talks</a>
+      <a href="../index.html#about">About</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap article-layout">
+    <article class="article-main">
+      <div class="article-head">
+        <a class="back" href="../media.html">← Writing &amp; Talks</a>
+        <h1>Claude Code, Command by Command — Part 2: Context and Memory</h1>
+        <div class="article-meta">
+          <span>June 30, 2026</span>
+          <span>6 min read</span>
+          <a href="https://medium.com/@mabujadallah/claude-code-command-by-command-part-2-context-and-memory-68e8263f196d" target="_blank" rel="noopener">Originally on Medium ↗</a>
+        </div>
+      </div>
+      <div class="prose">
+<p><em>Part 2 of a simple, practical series. </em><a href="https://medium.com/@mabujadallah/claude-code-command-by-command-part-1-the-commands-you-use-every-day-85d2d0662980"><em>Part 1</em></a><em> covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and what it forgets.</em></p><p>Every Claude Code session starts with an empty head. It doesn’t remember yesterday’s conversation. So the real skill isn’t typing better prompts — it’s managing what Claude knows at the start of a session, and what it holds onto as the session runs long.</p><p>There are two halves to this. <strong>Memory</strong> carries knowledge <em>across</em> sessions. <strong>Context</strong> is the working space <em>inside</em> one session. Get both right and Claude feels like a teammate who already knows your project. Get them wrong and it re-learns everything every morning, then slowly forgets it by lunch.</p><p>Let’s take them one at a time.</p><h3>The two kinds of memory</h3><p>Claude Code remembers your project in two ways, and they’re easy to mix up. One you write. One Claude writes.</p><figure><img loading="lazy" decoding="async" alt="" src="https://cdn-images-1.medium.com/max/1024/1*vBZQPnG5GYwlP_bQcRmjDw.png" /></figure><p><em>You write the rules. Claude writes down what it learns. Both load at the start of every session.</em></p><p><strong>CLAUDE.md</strong> is a plain text file you write. Claude reads it at the start of every session. Think of it as the note you&#39;d otherwise re-type each day: your build commands, your conventions, where things live, the &quot;always do X&quot; rules.</p><p><strong>Auto memory</strong> is the opposite direction: Claude takes its own notes as it works, and reads them back next time. You don’t write these — Claude decides what’s worth keeping.</p><p>You’ll use both. The rest of this part is how.</p><h3>Writing a CLAUDE.md that actually helps</h3><p>Start by generating one. In a repo, run <strong>/init</strong> and Claude reads your codebase and writes a first draft — build commands, test setup, conventions it can spot. If a CLAUDE.md already exists, /init suggests improvements instead of overwriting it.</p><p>Then make it good. Two rules carry most of the weight:</p><p><strong>Be specific.</strong> Vague instructions get ignored. Concrete ones get followed.</p><ul><li>“Use 2-space indentation” beats “format code properly”</li><li>“Run npm test before committing&quot; beats &quot;test your changes&quot;</li><li>“API handlers live in src/api/handlers/&quot; beats &quot;keep files organized&quot;</li></ul><p><strong>Keep it short.</strong> Aim for under ~200 lines. The whole file loads into context every session, so a bloated CLAUDE.md costs you on every message <em>and</em> gets followed less reliably. If you catch yourself writing a long procedure, that belongs in a skill, not here.</p><p>A good test for what goes in: <em>did you type the same correction last session?</em> If yes, write it down. If a code review caught something Claude should have known, write that down too.</p><h3>Where the file lives</h3><p>CLAUDE.md can sit at four different levels, from org-wide down to just-you-just-this-project. They all load, broad to specific, and the more specific one wins a conflict.</p><figure><img loading="lazy" decoding="async" alt="" src="https://cdn-images-1.medium.com/max/1024/1*Fm8KGdcn53h02pXlu4s27A.png" /></figure><p><em>Four places a CLAUDE.md can live. Most of the time you’ll use Project (shared with your team) and maybe Local (just you).</em></p><p>For most people it’s simple: put team rules in ./CLAUDE.md and commit it. Put your personal, machine-specific notes in ./CLAUDE.local.md and add it to .gitignore.</p><p>To edit any of these later, run <strong>/memory</strong>. It lists every memory file loaded in your session — useful when Claude ignores a rule and you want to check the file is even being read.</p><h3>Auto memory: the notes Claude takes itself</h3><p>This is the part people don’t realize is happening. As Claude works, it quietly saves things worth remembering — a build quirk, a fix for an obscure error, a preference you stated. Next session, it reads them back. You’ll see “Writing memory” or “Recalled memory” flash by when it does.</p><p>It’s on by default, and it’s stored on your machine, one folder per repository. It is not synced to the cloud or shared across machines — it’s local, fast, and yours to inspect.</p><p>You can nudge it directly. Just say:</p><pre>remember that the integration tests need Redis running locally</pre><p>and Claude saves it. One habit worth building: after a few sessions on a new project, run /memory, open the memory folder, and skim what&#39;s been saved. A wrong note will quietly repeat itself in every future session until you fix it, and fixing it takes ten seconds.</p><h3>Managing context inside a session</h3><p>Memory is across sessions. Context is the single session you’re in right now — and it’s a fixed budget. Everything Claude reads (your files, command output, the conversation itself) fills it up. As it fills, answers get vaguer and Claude starts forgetting things from earlier. There’s even a name for it: context rot.</p><p>Two commands keep this under control, both from Part 1:</p><p><strong>/context</strong> shows you where the space is going, as a colored grid. Run it when a session feels off — it tells you whether the problem is a bloated file, too much old tool output, or just a long conversation.</p><p><strong>/compact</strong> summarizes the conversation to free up room while keeping the same task alive. <strong>/clear</strong> wipes it for a fresh task. (That distinction was the heart of Part 1.)</p><p>Here’s the part worth knowing: Claude also compacts <em>on its own</em> as you near the limit. You don’t trigger it, and it can flatten things you cared about. So it matters what survives.</p><h3>What survives a compaction</h3><p>When the conversation gets summarized — by you or automatically — not everything makes it through intact.</p><figure><img loading="lazy" decoding="async" alt="" src="https://cdn-images-1.medium.com/max/1024/1*HOAuHtgYkuID-0ICDNNNvA.png" /></figure><p><em>Anything saved to disk comes back. Anything that lived only in the chat can get flattened into a summary.</em></p><p>The pattern is simple once you see it: <strong>things saved to a file survive; things that only existed in the conversation might not.</strong> Your project-root CLAUDE.md gets re-read from disk. Auto memory reloads. Your files are untouched. But a decision you made out loud thirty minutes ago — &quot;let&#39;s handle auth in middleware, not per-route&quot; — can get summarized into a vaguer shape, or lost.</p><p>Two ways to protect what matters:</p><ol><li><strong>Write it down.</strong> If a rule must always hold, it belongs in CLAUDE.md, not in the chat. That&#39;s the whole reason the file survives compaction.</li><li><strong>Steer the summary.</strong> Run /compact focus on the auth refactor and the summary is built around what you named. You can make this automatic by adding a ## Compact Instructions section to your CLAUDE.md.</li></ol><p>When Claude seems to “forget” something mid-session, your two debugging tools are /memory (what files loaded?) and /context (what&#39;s eating the window?).</p><h3>The cheat sheet</h3><p>Command Use it to… /init Generate a starter CLAUDE.md from your code /memory See loaded memory files, edit them, toggle auto memory /context See what&#39;s filling the context window /compact Summarize to free room (focus on… to steer it) /clear Wipe the chat for a new task <em>say</em> &quot;remember that…&quot; Save a note to auto memory</p><p>And the two-line mental model:</p><ul><li><strong>CLAUDE.md</strong> = rules you write, loaded every session, survives compaction. Keep it short and specific.</li><li><strong>Auto memory</strong> = notes Claude writes itself, stored locally, also reloads. Review it now and then.</li></ul><h3>The takeaway</h3><p>Most “Claude forgot what I told it” problems aren’t bugs — they’re a note that lived in the chat instead of in a file. Put durable rules in CLAUDE.md, let auto memory handle the rest, and use /context and /memory to see what&#39;s actually loaded. That&#39;s the whole game.</p><p><strong>Next up — Part 3: Running Claude Code without the chat.</strong> Headless mode (claude -p), piping files in, structured output, and putting Claude into a script or CI pipeline. This is where Claude Code stops being a chat window and becomes a tool you build on.</p><p><em>As always: features move fast. Run </em><em>/memory and </em><em>/context in your own session to see exactly how yours is set up, and check the official docs for anything version-specific.</em></p><img loading="lazy" decoding="async" src="https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=68e8263f196d" width="1" height="1" alt="">
+      </div>
+      <div class="article-foot">
+        <a class="read-on-medium" href="https://medium.com/@mabujadallah/claude-code-command-by-command-part-2-context-and-memory-68e8263f196d" target="_blank" rel="noopener">Read &amp; clap on Medium ↗</a>
+        <a class="back" href="../media.html">← All writing &amp; talks</a>
+      </div>
+    </article>
+    <aside class="article-rail" aria-label="More writing">
+      <div class="rail-sticky">
+        <span class="rail-label">More writing</span>
+        <ul class="rail-list">
+          <li><a href="claude-code-command-by-command-part-1-the-commands-you-use-every-day.html"><span class="rail-title">Claude Code, Command by Command — Part 1: The Commands You Use Every Day</span><span class="rail-date">June 29, 2026</span></a></li>
+          <li><a href="claude-code-on-your-phone-a-practical-guide-to-remote-control.html"><span class="rail-title">Claude Code on Your Phone: A Practical Guide to Remote Control</span><span class="rail-date">June 27, 2026</span></a></li>
+          <li><a href="your-claude-code-install-worked-so-why-does-windows-say-claude-is-not-recognized.html"><span class="rail-title">Your Claude Code Install Worked. So Why Does Windows Say “claude is not recognized”?</span><span class="rail-date">June 26, 2026</span></a></li>
+          <li><a href="why-a-two-word-reply-can-cost-40-of-your-ai-budget.html"><span class="rail-title">Why a Two-Word Reply Can Cost 40% of Your AI Budget</span><span class="rail-date">June 26, 2026</span></a></li>
+          <li><a href="39-5-million-pull-requests-a-dataset-for-the-age-of-ai-coding-agents.html"><span class="rail-title">39.5 Million Pull Requests: A Dataset for the Age of AI Coding Agents</span><span class="rail-date">June 22, 2026</span></a></li>
+          <li><a href="half-of-ai-generated-bug-fixes-get-rejected-we-read-306-of-them-to-find-out-why.html"><span class="rail-title">Half of AI-Generated Bug Fixes Get Rejected. We Read 306 of Them to Find Out Why.</span><span class="rail-date">June 21, 2026</span></a></li>
+        </ul>
+        <a class="rail-all" href="../media.html">All writing &amp; talks →</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Mahmoud S. Y. Abujadallah</span>
+    <span>ÉTS Montréal · Gaza, Palestine</span>
+  </div>
+</footer>
+<script src="../css/site.js" defer></script>
+</body>
+</html>

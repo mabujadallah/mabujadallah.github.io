@@ -2,6 +2,32 @@
   "source": "https://medium.com/@mabujadallah",
   "items": [
     {
+      "title": "Claude Code, Command by Command — Part 2: Context and Memory",
+      "local": "posts/claude-code-command-by-command-part-2-context-and-memory.html",
+      "url": "https://medium.com/@mabujadallah/claude-code-command-by-command-part-2-context-and-memory-68e8263f196d",
+      "date": "2026-06-30",
+      "snippet": "Part 2 of a simple, practical series. Part 1 covered the everyday commands. This one is about the thing that quietly decides whether a session goes well: what Claude knows, and wha…",
+      "tags": [
+        "claude",
+        "claude-code",
+        "software-engineering"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*vBZQPnG5GYwlP_bQcRmjDw.png"
+    },
+    {
+      "title": "Claude Code, Command by Command — Part 1: The Commands You Use Every Day",
+      "local": "posts/claude-code-command-by-command-part-1-the-commands-you-use-every-day.html",
+      "url": "https://medium.com/@mabujadallah/claude-code-command-by-command-part-1-the-commands-you-use-every-day-85d2d0662980",
+      "date": "2026-06-29",
+      "snippet": "A simple, practical series for anyone who installed Claude Code, pressed /, and felt lost. When you press / in Claude Code, around eighty commands show up. That's a lot, and most g…",
+      "tags": [
+        "ai-agent",
+        "claude-code",
+        "command-line"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*SLnVfdVpAWE-TXRJzZdXMw.png"
+    },
+    {
       "title": "Claude Code on Your Phone: A Practical Guide to Remote Control",
       "local": "posts/claude-code-on-your-phone-a-practical-guide-to-remote-control.html",
       "url": "https://medium.com/@mabujadallah/claude-code-on-your-phone-a-practical-guide-to-remote-control-905bd258837c",
@@ -93,5 +119,5 @@
       "image": "https://cdn-images-1.medium.com/max/800/1*CqzIjuIv-mvjXBECmc4k9A.png"
     }
   ],
-  "updated": "2026-06-27T22:04:13Z"
+  "updated": "2026-06-30T15:31:33Z"
 }
