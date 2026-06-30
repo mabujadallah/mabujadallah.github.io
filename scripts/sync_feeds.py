@@ -401,21 +401,22 @@ def changed_post_urls(old_items, posts):
 
 def ping_indexnow(urls):
     """Notify IndexNow (Bing, Yandex, …) that these URLs changed. Best-effort."""
+    urls = [u for u in dict.fromkeys(urls) if u]   # de-dupe, drop blanks
     if not urls:
-        print("indexnow: nothing changed, skipping")
+        print("indexnow: nothing to submit, skipping")
         return
     ensure_indexnow_key()
     payload = json.dumps({
         "host": urllib.parse.urlsplit(BASE_URL).netloc,
         "key": INDEXNOW_KEY,
         "keyLocation": f"{BASE_URL}/{INDEXNOW_KEY}.txt",
-        "urlList": [f"{BASE_URL}/media.html", f"{BASE_URL}/feed.xml"] + urls,
+        "urlList": urls,
     }).encode("utf-8")
     req = urllib.request.Request(
         "https://api.indexnow.org/indexnow", data=payload, method="POST",
         headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
-        print(f"indexnow: submitted {len(urls)} changed url(s) -> HTTP {r.status}")
+        print(f"indexnow: submitted {len(urls)} url(s) -> HTTP {r.status}")
 
 
 # --------------------------------------------------------------------------- #
@@ -483,7 +484,9 @@ def sync_medium():
     write_feed(posts)
     ensure_indexnow_key()
     try:  # search-engine ping is best-effort; never fail the sync over it
-        ping_indexnow(changed_post_urls(store.get("items", []), posts))
+        changed = changed_post_urls(store.get("items", []), posts)
+        if changed:
+            ping_indexnow([f"{BASE_URL}/media.html", f"{BASE_URL}/feed.xml"] + changed)
     except Exception as exc:
         print(f"WARN indexnow: {exc}", file=sys.stderr)
     print(f"medium: {len(fresh)} from feed, {len(posts)} total in archive")
@@ -509,4 +512,12 @@ def main():
 
 
 if __name__ == "__main__":
+    # `python sync_feeds.py indexnow <url> [<url> ...]` pings IndexNow only
+    # (used by the push-triggered workflow for hand-edited pages). Best-effort.
+    if len(sys.argv) > 1 and sys.argv[1] == "indexnow":
+        try:
+            ping_indexnow(sys.argv[2:])
+        except Exception as exc:
+            print(f"WARN indexnow: {exc}", file=sys.stderr)
+        sys.exit(0)
     sys.exit(main())

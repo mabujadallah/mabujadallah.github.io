@@ -30,7 +30,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/articles.json data/videos.json data/posts.json posts sitemap.xml
+          git add data/articles.json data/videos.json data/posts.json posts sitemap.xml feed.xml a7f3c1e94b6d2058f1c8e3a9d4b70e62.txt
           if git diff --cached --quiet; then
             echo "No feed changes."
           else

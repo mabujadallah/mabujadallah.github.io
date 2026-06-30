@@ -1,0 +1,51 @@
+name: IndexNow (pages)
+
+# Pings IndexNow (Bing, Yandex, …) the moment a hand-edited content page is
+# pushed to main, so static-page changes get picked up fast — the same way
+# sync_feeds.py already pings for new Medium posts. Only the pages that
+# actually changed in the push are submitted.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "publications.html"
+      - "projects.html"
+      - "datasets.html"
+      - "media.html"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Determine changed page URLs
+        id: urls
+        run: |
+          base="${{ github.event.before }}"
+          if ! git rev-parse --quiet --verify "$base^{commit}" >/dev/null 2>&1; then
+            base="$(git rev-parse HEAD~1 2>/dev/null || echo HEAD)"
+          fi
+          changed="$(git diff --name-only "$base" "${{ github.sha }}" \
+            | grep -E '^(index|publications|projects|datasets|media)\.html$' || true)"
+          urls=""
+          for f in $changed; do urls="$urls https://mabujadallah.github.io/$f"; done
+          urls="$(echo "$urls" | xargs)"
+          echo "list=$urls" >> "$GITHUB_OUTPUT"
+          echo "Changed pages: ${urls:-none}"
+      - name: Ping IndexNow
+        if: steps.urls.outputs.list != ''
+        run: python scripts/sync_feeds.py indexnow ${{ steps.urls.outputs.list }}
