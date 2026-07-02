@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mabujadallah.github.io/</loc>
-    <lastmod>2026-06-22</lastmod>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mabujadallah.github.io/publications.html</loc>
-    <lastmod>2026-06-22</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mabujadallah.github.io/datasets.html</loc>
-    <lastmod>2026-06-22</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mabujadallah.github.io/projects.html</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mabujadallah.github.io/media.html</loc>
-    <lastmod>2026-06-21</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
