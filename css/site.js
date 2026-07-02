@@ -298,4 +298,96 @@
     toc.innerHTML = '<summary>On this page</summary><ul>' + items.join('') + '</ul>';
     prose.parentNode.insertBefore(toc, prose);
   })();
+
+  // Off-canvas navigation drawer — a slide-in sidebar that mirrors the top-bar
+  // links, opened by a hamburger button on every screen size. Injected here so
+  // the markup lives in one place instead of all the page headers; it clones
+  // whatever <nav class="nav-links"> the current page ships, so hrefs and the
+  // aria-current highlight are always right for that page.
+  (function () {
+    var tools = document.querySelector('.nav-tools');
+    var srcNav = document.querySelector('.nav-links');
+    if (!tools || !srcNav) return;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'icon-btn';
+    btn.id = 'menuToggle';
+    btn.setAttribute('aria-label', 'Open navigation menu');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'sideNav');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>';
+    tools.insertBefore(btn, tools.firstChild);
+
+    var esc = function (s) { return (s || '').replace(/"/g, '&quot;'); };
+    var brand = document.querySelector('.brand');
+    var linksHTML = '';
+    Array.prototype.forEach.call(srcNav.querySelectorAll('a'), function (a) {
+      var cur = a.getAttribute('aria-current') === 'page' ? ' aria-current="page"' : '';
+      linksHTML += '<a href="' + esc(a.getAttribute('href')) + '"' + cur + '>' + a.innerHTML + '</a>';
+    });
+    var cta = document.querySelector('.nav-cta');
+    var footHTML = cta ? '<div class="side-foot"><a class="nav-cta" href="' + esc(cta.getAttribute('href')) + '">' + cta.innerHTML + '</a></div>' : '';
+
+    var drawer = document.createElement('div');
+    drawer.className = 'side-drawer';
+    drawer.id = 'sideNav';
+    drawer.hidden = true;
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
+    drawer.setAttribute('aria-label', 'Site navigation');
+    drawer.innerHTML =
+      '<div class="side-backdrop" data-close></div>' +
+      '<aside class="side-panel">' +
+        '<div class="side-head">' +
+          '<span class="side-brand">' + (brand ? brand.innerHTML : '<span>Menu</span>') + '</span>' +
+          '<button type="button" class="icon-btn" data-close aria-label="Close navigation menu">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<nav class="side-links" aria-label="Sections">' + linksHTML + '</nav>' +
+        footHTML +
+      '</aside>';
+    document.body.appendChild(drawer);
+
+    var isOpen = false, lastFocus = null;
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      lastFocus = document.activeElement;
+      drawer.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      btn.setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(function () {
+        drawer.classList.add('show');
+        var first = drawer.querySelector('.side-links a') || drawer.querySelector('[data-close]');
+        if (first) first.focus();
+      });
+    }
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      drawer.classList.remove('show');
+      document.documentElement.style.overflow = '';
+      btn.setAttribute('aria-expanded', 'false');
+      setTimeout(function () { drawer.hidden = true; }, 260);
+      if (lastFocus && lastFocus.focus) lastFocus.focus(); else btn.focus();
+    }
+
+    btn.addEventListener('click', open);
+    drawer.addEventListener('click', function (e) {
+      if (e.target.closest('[data-close]') || e.target.closest('.side-links a, .side-foot a')) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) { e.preventDefault(); close(); }
+    });
+    drawer.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab' || !isOpen) return;
+      var f = drawer.querySelectorAll('a[href], button:not([disabled])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  })();
 })();

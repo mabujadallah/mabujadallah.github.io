@@ -481,6 +481,25 @@ body{
   html[data-theme="dark"] .hit-type{background:#222a37}
   html[data-theme="dark"] .search-backdrop{background:rgba(0,0,0,.62)}
   @media(max-width:560px){.search-modal{padding:8vh 12px 12px}.search-foot{display:none}}
+
+  /* ---- off-canvas navigation drawer (hamburger sidebar) ----
+     Mirrored from css/site.css (the homepage ships inline styles). Keep in sync. */
+  .side-drawer{position:fixed;inset:0;z-index:1100}
+  .side-drawer[hidden]{display:none}
+  .side-backdrop{position:absolute;inset:0;background:rgba(13,16,23,.5);backdrop-filter:blur(2px);opacity:0;transition:opacity .22s}
+  .side-drawer.show .side-backdrop{opacity:1}
+  .side-panel{position:absolute;top:0;bottom:0;left:0;width:min(300px,82vw);display:flex;flex-direction:column;background:var(--paper-raised);border-right:1px solid var(--line-strong);box-shadow:0 30px 80px -24px rgba(13,16,23,.55);transform:translateX(-100%);transition:transform .24s cubic-bezier(.22,.61,.36,1);overflow-y:auto}
+  .side-drawer.show .side-panel{transform:none}
+  .side-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .side-brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--ink)}
+  .side-links{display:flex;flex-direction:column;padding:12px;gap:2px}
+  .side-links a{font-family:var(--mono);font-size:14px;color:var(--ink-soft);padding:12px 14px;border-radius:9px;transition:background .18s,color .18s}
+  .side-links a:hover,.side-links a[aria-current="page"]{background:var(--accent-soft);color:var(--accent-deep)}
+  .side-foot{margin-top:auto;padding:16px 18px;border-top:1px solid var(--line)}
+  .side-foot .nav-cta{display:flex;justify-content:center;width:100%}
+  [dir="rtl"] .side-panel{left:auto;right:0;border-right:0;border-left:1px solid var(--line-strong);transform:translateX(100%)}
+  [dir="rtl"] .side-drawer.show .side-panel{transform:none}
+  @media(prefers-reduced-motion:reduce){.side-panel,.side-backdrop{transition:none}}
 </style>
 <script>
   document.documentElement.classList.add('js');
